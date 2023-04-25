@@ -1,0 +1,12 @@
+====================================Remainig
+Username and email exsist validation on - Register page
+Image Uploading on - Complete profile page
+
+
+===================================Problems
+React Helmet - 
+OWL
+
+
+===================================Security
+Create Password - Redirection (Redirect user if not coming from /verify-email)
