@@ -1,11 +1,21 @@
 import { Images } from "config/images";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const { likeIcon } = Images;
-const Post = ({ post }) => {
+const Post = ({ linkTo = null }) => {
+  const navigate = useNavigate();
+  const handleClick = () => {
+    if (linkTo) {
+      navigate(linkTo);
+    }
+  };
   return (
-    <article className="relative isolate flex flex-col gap-5 lg:flex-row bg-white rounded-2xl p-4">
-      <div className="absolute top-6 right-4 cursor-pointer">
+    <article
+      onClick={() => handleClick()}
+      className="relative isolate flex flex-col gap-5 lg:flex-row bg-white rounded-2xl p-4 cursor-pointer"
+    >
+      <div className="absolute top-6 right-4 cursor-pointer p-1">
         <img src={likeIcon.default} />
       </div>
       <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-[156px] lg:h-full lg:shrink-0 w-11/12">

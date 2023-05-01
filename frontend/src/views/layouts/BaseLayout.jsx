@@ -1,8 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, Component } from "react";
 import { useLocation } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer, toast } from "react-toastify";
 import { setMessage, resetFormErrorsAction } from "redux/actions/commonActions";
+
 const BaseLayout = ({ children, common, setMessage, resetErrors }) => {
   const location = useLocation();
   useEffect(()=>{
@@ -11,9 +12,17 @@ const BaseLayout = ({ children, common, setMessage, resetErrors }) => {
       setMessage(null)
     }
   }, [common, setMessage])
+
   useEffect(() => {
+    document.documentElement.scrollTo({
+      top: 0,
+      left: 0,
+    });
+
     if (location) resetErrors({});
   }, [location]);
+
+
   return (
     <>
       {children}

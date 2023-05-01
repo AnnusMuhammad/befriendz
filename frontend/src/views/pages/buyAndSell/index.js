@@ -1,50 +1,7 @@
+import Search from "views/components/shared/search";
 import { Images } from "../../../config/images";
 import { Link } from "react-router-dom";
-const user = {
-  name: "Chelsea Hagon",
-  email: "chelsea.hagon@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1550525811-e5869dd03032?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-
-const whoToFollow = [
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  {
-    name: "Leonard Krasner",
-    handle: "leonardkrasner",
-    href: "#",
-    imageUrl:
-      "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-  },
-  // More people...
-];
+import LeftSideFilter from "./LeftSideFilter";
 
 const posts = [
   {
@@ -305,31 +262,14 @@ const PageLayOut = ({ center, left, right }) => (
 );
 const Center = () => (
   <main className="lg:col-span-9 xl:col-span-7">
-    <div className="bg-white p-[1rem] rounded-2xl ">
-      <div className="grid grid-cols-12 w-full ">
-        <div className="col-span-10 justify-self-center w-full">
-          <input
-            type="text"
-            name="text"
-            id="text"
-            className=" bg-c_F5F5F5 block w-full rounded-md placeholder:text-c_949494 placeholder:font-openSans_regular placeholder:text-[14px] text-[14px] focus:outline-none py-2.5 px-[12px]
-  "
-            placeholder="What are you looking for...."
-          />
-        </div>
-        <div className="col-span-2 justify-self-end">
-          <button
-            type="button"
-            className="rounded-md bg-[#0493A3] py-2.5 px-6 text-[14px] font-openSans_semiBold text-white focus-visible:outline-none hover:brightness-110"
-          >
-            Search
-          </button>
-        </div>
-      </div>
+    <div>
+      <Search placeholder="What are you looking for...." />
     </div>
-    <div className="mt-[1rem] space-y-5">
+    <div className=" space-y-5 gap-2 flex flex-col m-2 md:m-0 md:mt-[1rem] ">
       {posts.map((post) => (
-        <Link to="/view-product"><Post post={post} /></Link>
+        <Link to="/view-product">
+          <Post post={post} />
+        </Link>
       ))}
     </div>
   </main>
@@ -397,108 +337,15 @@ const Right = () => (
     </div>
   </aside>
 );
-const Left = () => (
-  <div className="hidden lg:col-span-3 lg:block xl:col-span-2 ">
-    <nav aria-label="Sidebar" className="sticky top-4 space-y-4">
-      <section>
-        <div className="rounded-2xl bg-white flex items-center flex-col space-y-3 py-3 px-2">
-          <div className="p-[5px] flex w-full items-center space-x-2 rounded-md">
-            <div className="bg-c_F5F5F5 rounded-md p-[10px]">
-              <img src={newIcon.default} />
-            </div>
-            <div className="text-white flex flex-col">
-              <span className="text-c_515165 text-[12px] font-openSans_bold">
-                New Feeds
-              </span>
-              <span className="text-c_949494 text-[8px] font-openSans_regular">
-                Find the latest update
-              </span>
-            </div>
-          </div>
-          <div className="p-[5px] bg-c_FFF5E6 flex w-full items-center space-x-2 rounded-md">
-            <div className="bg-white rounded-md p-[10px]">
-              <img src={starIcon.default} />
-            </div>
-            <div className="text-white flex flex-col">
-              <span className="text-c_515165 text-[12px] font-openSans_bold">
-                Wall of Fame
-              </span>
-              <span className="text-c_949494 text-[8px] font-openSans_regular">
-                Shots featured today by curators
-              </span>
-            </div>
-          </div>
-          <div className="p-[5px] flex w-full items-center space-x-2 rounded-md">
-            <div className="bg-c_F5F5F5 rounded-md p-[10px]">
-              <img src={friendsIcon.default} />
-            </div>
-            <div className="text-white flex flex-col">
-              <span className="text-c_515165 text-[12px] font-openSans_bold">
-                From Friends
-              </span>
-              <span className="text-c_949494 text-[8px] font-openSans_regular">
-                Explore from your favorite people
-              </span>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* <div className="space-y-1 pb-8">
-{navigation.map((item) => (
-<a
-  key={item.name}
-  href={item.href}
-  className={classNames(
-    item.current
-      ? "bg-gray-200 text-gray-900"
-      : "text-gray-700 hover:bg-gray-50",
-    "group flex items-center rounded-md px-3 py-2 text-sm font-medium"
-  )}
-  aria-current={item.current ? "page" : undefined}
->
-  <item.icon
-    className={classNames(
-      item.current
-        ? "text-gray-500"
-        : "text-gray-400 group-hover:text-gray-500",
-      "-ml-1 mr-3 h-6 w-6 flex-shrink-0"
-    )}
-    aria-hidden="true"
-  />
-  <span className="truncate">{item.name}</span>
-</a>
-))}
-</div> */}
-      {/* <div className="pt-10">
-<p
-className="px-3 text-sm font-medium text-gray-500"
-id="communities-headline"
->
-Communities
-</p>
-<div
-className="mt-3 space-y-2"
-aria-labelledby="communities-headline"
->
-{communities.map((community) => (
-  <a
-    key={community.name}
-    href={community.href}
-    className="group flex items-center rounded-md px-3 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-gray-900"
-  >
-    <span className="truncate">{community.name}</span>
-  </a>
-))}
-</div>
-</div> */}
-    </nav>
-  </div>
-);
 export default function BuyAndSell() {
   return (
     <>
-      <PageLayOut center={<Center />} right={<Right />} left={<Left />} />
+      <PageLayOut
+        center={<Center />}
+        right={<Right />}
+        left={<LeftSideFilter />}
+      />
     </>
   );
 }

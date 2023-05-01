@@ -34,7 +34,7 @@ const BudgetsAndScheduleForm = () => (
               />
             </div>
 
-            <EmptySpace height="40px" />
+            <EmptySpace height="10px" />
             <div>
               <Button
                 type="submit"
@@ -43,6 +43,24 @@ const BudgetsAndScheduleForm = () => (
               />
             </div>
           </form>
+          <div className="mt-5 flex flex-col md:flex-row flex-wrap gap-4 items-center justify-between">
+            <div>
+              <Button
+                type="submit"
+                text={"Pause"}
+                className="min-h-[50px] px-20 w-min bg-white text-[#0493A3] border-2 border-[#0493A3]"
+                style={{ color: "#0493A3" }}
+              />
+            </div>
+            <div>
+              <Button
+                type="submit"
+                text={"Stop"}
+                className="min-h-[50px] px-20 w-min "
+                style={{ background: "#F5F5F5", color: "black" }}
+              />
+            </div>
+          </div>
         </div>
         <div></div>
       </div>

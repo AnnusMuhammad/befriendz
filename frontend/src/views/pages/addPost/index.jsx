@@ -5,6 +5,8 @@ import { TagsInput } from "react-tag-input-component";
 import { Images } from "../../../config/images";
 import Post from "../viewPost/Post";
 import PreviewPost from "./PreviewPost";
+import PageLayout from "views/layouts/page";
+import ImageFormPreview from "views/components/shared/form-elements/imageFormPreview";
 
 const AddPost = () => {
   const {
@@ -92,11 +94,6 @@ const AddPost = () => {
           isPreview ? "hidden" : "block"
         }`}
       >
-        {/* <div className="bg-[#F5F5F5] px-[15px] py-[10px] rounded-md">
-          <span className="text-[#949494] text-[26px] font-openSans_medium">
-            Name of the Product
-          </span>
-        </div> */}
         <div className="">
           <input
             className="bg-[#F5F5F5] px-[15px] py-[10px] rounded-md text-[#949494] text-[26px] font-openSans_bold w-full outline-none"
@@ -218,32 +215,11 @@ const AddPost = () => {
         </div>
         {image && (
           <div>
-            <div className="text-[#2A2A2A] my-4 text-sm font-semibold flex flex-row gap-2 items-center">
-              <div>
-                <img
-                  src={image}
-                  alt="preview cover image"
-                  className="rounded-full h-10 w-10 object-cover"
-                />
-              </div>
-              <div className="truncate max-w-[70vw] overflow-hidden">
-                {imageName}
-              </div>
-              <div onClick={() => setImage(null)} className="cursor-pointer">
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 20 20"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.1786 10L13.8311 12.6525C14.156 12.9776 14.1579 13.5025 13.8302 13.8303C13.5048 14.1556 12.9773 14.1557 12.6525 13.8311L9.99998 11.1786L7.34748 13.8311C7.02243 14.156 6.49745 14.158 6.16973 13.8303C5.8444 13.5048 5.84426 12.9773 6.1689 12.6525L8.8214 10L6.1689 7.3475C5.84398 7.02244 5.84203 6.49746 6.16973 6.16975C6.49521 5.84441 7.0227 5.84428 7.34748 6.16891L9.99998 8.82141L12.6525 6.16891C12.9775 5.844 13.5025 5.84205 13.8302 6.16975C14.1556 6.49523 14.1557 7.02271 13.8311 7.3475L11.1786 10ZM10 20C4.47714 20 0 15.5229 0 10C0 4.47714 4.47714 0 10 0C15.5229 0 20 4.47714 20 10C20 15.5229 15.5229 20 10 20ZM10 18.3333C14.6025 18.3333 18.3332 14.6026 18.3332 10.0001C18.3332 5.39757 14.6025 1.66686 10 1.66686C5.3975 1.66686 1.66679 5.39757 1.66679 10.0001C1.66679 14.6026 5.3975 18.3333 10 18.3333Z"
-                    fill="#949494"
-                  />
-                </svg>
-              </div>
-            </div>
+            <ImageFormPreview
+              imageName={imageName}
+              setImage={setImage}
+              image={image}
+            />
             <div className="pb-5 pt-3">
               <img
                 src={image}
@@ -254,7 +230,11 @@ const AddPost = () => {
           </div>
         )}
         <div className="w-full mt-4">
-          <CustomEditor value={content} setValue={setContent} />
+          <CustomEditor
+            value={content}
+            setValue={setContent}
+            placeholder="Write all the informations you want people to know.... "
+          />
         </div>
         <div className="w-full mt-[15px] flex flex-col gap-2">
           <label className="text-[#2A2A2A] text-[16px] font-openSans_regular">
@@ -315,35 +295,24 @@ const AddPost = () => {
   );
 };
 
-const PageLayOut = ({ center, left, right }) => (
-  <>
-    <div className="min-h-screen bg-[#F5F5F5]">
-      {/* When the mobile menu is open, add `overflow-hidden` to the `body` element to prevent double scrollbars */}
-      <div className="py-10 ">
-        <div className="mx-auto sm:px-6 lg:grid lg:grid-cols-12 lg:gap-8 lg:px-8">
-          {left}
-          {center}
-          {right}
-        </div>
-      </div>
-    </div>
-  </>
-);
-const Center = () => (
-  <main className="lg:col-span-9 xl:col-span-7">
-    <div className="space-y-5">
-      <AddPost />
-    </div>
-  </main>
-);
 const Right = () => <aside className="hidden xl:col-span-3 xl:block"></aside>;
 const Left = () => (
   <div className="hidden lg:col-span-3 lg:block xl:col-span-2 "></div>
 );
+const Center = () => (
+  <div className="mx-auto xl:grid xl:grid-cols-7 px-3 lg:px-4 lg:gap-8">
+    <main className="lg:col-span-5 xl:col-span-5">
+      <div className="space-y-5">
+        <AddPost />
+      </div>
+    </main>
+    <Right />
+  </div>
+);
 export default function SellProduct() {
   return (
     <>
-      <PageLayOut center={<Center />} right={<Right />} left={<Left />} />
+      <PageLayout mainContent={<Center />} sideBar={<Left />} />
     </>
   );
 }

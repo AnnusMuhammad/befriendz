@@ -1,5 +1,7 @@
 import { Fragment } from "react";
 import PurchasesItem from "../../../components/screenComponents/settings/purchases/purchasedItem";
+import PurchaseTable from "views/components/screenComponents/settings/purchases/purchaseTable";
+import TableSearchAndFilter from "views/components/shared/tableSearch";
 
 const Purchases = () => {
   return (
@@ -18,13 +20,13 @@ const Purchases = () => {
                       <span className="text-[#2A2A2A] font-openSans_bold text-[24px]">
                         Purchases
                       </span>
-                    </div>                      <button
-                        className="bg-[#FD6769] text-[#FFFFFF] text-[14px] font-openSans_regular flex justify-center items-center gap-2 min-h-[45px] min-w-[169px] rounded-lg"
-                      >
-                        <span>Add Payment Info</span>
-                      </button>
+                    </div>
+                    <div>
+                      <TableSearchAndFilter />
+                    </div>
                   </div>
                   <div className="h-1 bg-c_FD6769 w-full rounded-full"></div>
+                  <PurchaseTable />
                 </div>
               </div>
             </div>

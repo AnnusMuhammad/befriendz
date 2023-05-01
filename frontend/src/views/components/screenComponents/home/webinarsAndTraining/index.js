@@ -1,4 +1,5 @@
 import { Images } from "config/images";
+import { Link } from "react-router-dom";
 const { doubleArrowRightBlueIcon } = Images;
 
 const WebinarsAndTrainingList = () => (
@@ -39,12 +40,18 @@ const WebinarsAndTraining = () => {
             {Array.from({ length: 5 })?.map((item) => (
               <WebinarsAndTrainingList />
             ))}
-
-            <div className="flex justify-center items-center space-x-2 cursor-pointer">
-              <span className=" text-c_0493A3 text-[12px] font-openSans_light">
-                See more
-              </span>
-              <img src={doubleArrowRightBlueIcon.default} />
+            <div className="flex justify-center">
+              <div className="inline-block">
+                <Link
+                  to="/group-webinar-training"
+                  className="flex justify-center items-center space-x-2 cursor-pointer"
+                >
+                  <span className=" text-c_0493A3 text-[12px] font-openSans_light">
+                    See more
+                  </span>
+                  <img src={doubleArrowRightBlueIcon.default} />
+                </Link>
+              </div>
             </div>
           </div>
         </>

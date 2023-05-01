@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Modal from "../../../shared/modal";
+import CustomGreenCheckbox from "views/components/shared/CustomGreenCheckbox";
 const diamondShape = (
   <svg
     width="20"
@@ -133,24 +134,6 @@ const platinumIcon = (
         <stop offset="1" stop-color="#FFE815" />
       </linearGradient>
     </defs>
-  </svg>
-);
-const checkBox = (
-  <svg
-    width="20"
-    height="20"
-    viewBox="0 0 20 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
-    <rect width="20" height="20" rx="4" fill="#30B52D" />
-    <path
-      d="M14 7L8.5 12.5L6 10"
-      stroke="white"
-      stroke-width="1.5"
-      stroke-linecap="round"
-      stroke-linejoin="round"
-    />
   </svg>
 );
 
@@ -368,31 +351,32 @@ const SubscriptionModal = ({ open = true, setOpen }) => {
                 {item?.packageItems?.map((item2) => {
                   return (
                     <div className="flex items-center space-x-3">
-                      <div>{checkBox}</div>
-                      <div>
+                      <CustomGreenCheckbox label={item2?.label}>
                         <div>
-                          <span
-                            className={`text-[12px] font-openSans_regular leading-tight ${
-                              item?.category === "golden"
-                                ? "text-white"
-                                : "text-[#949494]"
-                            }`}
-                          >
-                            {item2?.label}
-                          </span>
+                          <div>
+                            <span
+                              className={`text-[12px] font-openSans_regular leading-tight ${
+                                item?.category === "golden"
+                                  ? "text-white"
+                                  : "text-[#949494]"
+                              }`}
+                            >
+                              {item2?.label}
+                            </span>
+                          </div>
+                          <div>
+                            <span
+                              className={`text-[12px] font-openSans_medium leading-tight ${
+                                item?.category === "golden"
+                                  ? "text-white"
+                                  : "text-[#515165]"
+                              }`}
+                            >
+                              {item2?.description}
+                            </span>
+                          </div>
                         </div>
-                        <div>
-                          <span
-                            className={`text-[12px] font-openSans_medium leading-tight ${
-                              item?.category === "golden"
-                                ? "text-white"
-                                : "text-[#515165]"
-                            }`}
-                          >
-                            {item2?.description}
-                          </span>
-                        </div>
-                      </div>
+                      </CustomGreenCheckbox>
                     </div>
                   );
                 })}
@@ -472,31 +456,32 @@ const SubscriptionModal = ({ open = true, setOpen }) => {
                   return (
                     <div className="flex items-center justify-between w-full space-x-3">
                       <div className="flex items-center space-x-3">
-                        <div>{checkBox}</div>
-                        <div>
+                        <CustomGreenCheckbox label={item2?.label}>
                           <div>
-                            <span
-                              className={`text-[12px] font-openSans_regular leading-tight ${
-                                item?.category === "golden"
-                                  ? "text-white"
-                                  : "text-[#949494]"
-                              }`}
-                            >
-                              {item2?.label}
-                            </span>
+                            <div>
+                              <span
+                                className={`text-[12px] font-openSans_regular leading-tight ${
+                                  item?.category === "golden"
+                                    ? "text-white"
+                                    : "text-[#949494]"
+                                }`}
+                              >
+                                {item2?.label}
+                              </span>
+                            </div>
+                            <div>
+                              <span
+                                className={`text-[12px] font-openSans_medium leading-tight ${
+                                  item?.category === "golden"
+                                    ? "text-white"
+                                    : "text-[#515165]"
+                                }`}
+                              >
+                                {item2?.description}
+                              </span>
+                            </div>
                           </div>
-                          <div>
-                            <span
-                              className={`text-[12px] font-openSans_medium leading-tight ${
-                                item?.category === "golden"
-                                  ? "text-white"
-                                  : "text-[#515165]"
-                              }`}
-                            >
-                              {item2?.description}
-                            </span>
-                          </div>
-                        </div>
+                        </CustomGreenCheckbox>
                       </div>
                       <div>
                         <span

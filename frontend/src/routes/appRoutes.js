@@ -34,6 +34,12 @@ import WebinarDetails from "views/pages/webinar/webinarDetails";
 import TrainingDetails from "views/pages/training/trainingDetails";
 import GroupDetails from "views/pages/groups/groupDetails";
 import Page404 from "views/pages/404";
+import GroupWebinarTraining from "views/pages/groupWebinarTraining";
+import CreateGroupsPage from "views/pages/groupWebinarTraining/createGroup";
+
+import CreateWebinarPage from "views/pages/groupWebinarTraining/createWebinar";
+import CreateTrainingPage from "views/pages/groupWebinarTraining/createTraining";
+import GroupWebinarTrainingLive from "views/pages/groupWebinarTrainingLive";
 
 const Logout = ({ logout }) => {
   const navigate = useNavigate();
@@ -52,19 +58,29 @@ const AppRoutes = (props) => {
           path="/"
           element={!props.auth.isLoggedIn ? <Home /> : <Dashboard />}
         />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={<Profile />} />        
+        <Route path="/profile/:username" element={<Profile />} />
+        <Route path="/friends" element={<Friends />} />        
+        <Route path="/friends/:type" element={<Friends />} />
+
+        <Route path="/view-product" element={<ViewProduct />} />
         <Route path="/view-post" element={<ViewPost />} />
         <Route path="/buy" element={<BuyAndSell />} />
         <Route path="/add-post" element={<AddPost />} />
-        <Route path="/view-product" element={<ViewProduct />} />
-        <Route path="/friends" element={<Friends />} />
         <Route path="/sell" element={<AddProduct />} />
-
         {/* Groups, Webinars & Training */}
+        <Route
+          path="/group-webinar-training"
+          element={<GroupWebinarTraining />}
+        />
         <Route path="/webinar-details" element={<WebinarDetails />} />
         <Route path="/training-details" element={<TrainingDetails />} />
         <Route path="/group-details" element={<GroupDetails />} />
+        {/* Create Groups and Webinars Form */}
+        <Route path="/create-group" element={<CreateGroupsPage />} />
+        <Route path="/create-webinar" element={<CreateWebinarPage />} />
+        <Route path="/create-training" element={<CreateTrainingPage />} />
+        <Route path="/training-live" element={<GroupWebinarTrainingLive />} />
 
         {/* settings */}
         <Route path="/settings" element={<Settings />}>
@@ -96,12 +112,8 @@ const AppRoutes = (props) => {
           path="/recover-password/password-recovered"
           element={<PasswordRecovered />}
         />
-        <Route
-          path="*"
-          element={<Page404 />}
-        />
+        <Route path="*" element={<Page404 />} />
       </Routes>
-
     </>
   );
 };

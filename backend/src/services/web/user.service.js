@@ -1,6 +1,7 @@
 import userModel from "../../database/models/user.model.js";
 import UserUpdateProfileDto from "../../dto/userUpdateProfile.dto.js";
 import UserDto from "../../dto/user.dto.js";
+import FriendsService from './freinds.service.js'
 import { config } from "dotenv";
 config();
 
@@ -36,7 +37,38 @@ const updateProfile = async (req, res, next) => {
   
   return { data: { user: UserDto(updatedUser) } };
 };
+
+
+const getProfile = async (req, res, next) => {
+    const { currentUser } = req;
+    const username = req.params.username;
+    var user ;
+    let friendStatus = false;
+    if(username){
+      // Someone else profile
+      user = await userModel.findOne({ username: username }).populate('interests').exec();
+      // Check if is freind, or has friend request by current user
+      if(user){
+        req.user = user;
+        friendStatus = await FriendsService.getFriendStatus(req);
+      }
+
+    }
+    else    // My Profile
+    user = await userModel.findById(currentUser).populate('interests').exec();
+
+    if (!user) {
+        const error = new Error(`User not found`);
+        error.statusCode = 404;
+        throw error;
+    }
+    return { data: { user: UserDto(user), friendStatus } };
+}
+
+
+
 const UserService = {
   updateProfile,
+  getProfile,
 };
 export default UserService;

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { USER_STATUS, USER_TYPE } from "../../utils/constants/user.js";
 const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
@@ -66,14 +67,14 @@ const userSchema = new Schema(
     status: {
       type: String,
       require: true,
-      enum: ["notVerifiedEmail", "profilePending", "completed"],
-      default: "notVerifiedEmail",
+      enum: [USER_STATUS.notVerifiedEmail, USER_STATUS.profilePending, USER_STATUS.completed],
+      default: USER_STATUS.notVerifiedEmail,
     },
     type: {
       type: String,
       require: true,
-      enum: ["personal", "business"],
-      default: "personal",
+      enum: [USER_TYPE.personal, USER_TYPE.business],
+      default: USER_TYPE.personal,
     },
     isVerified: {
       type: Boolean,
@@ -88,6 +89,12 @@ const userSchema = new Schema(
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "topics",
+      },
+    ],
+    friends: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users",
       },
     ],
   },

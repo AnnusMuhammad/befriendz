@@ -10,7 +10,33 @@ import useFormHandler from "../../../../../shared/hooks/useFormHandler";
 import { updateProfileAction } from "redux/actions/userAction";
 import { REGX_CONSTANT } from "constants/regx.constant";
 import { USER_TYPE } from "constants/user.constant";
+import { useEffect, useState } from "react";
+import TopicService from "services/topic.service";
+import CheckboxGroup from "views/components/shared/form-elements/checkboxGroup";
 const EditProfileModal = (props) => {
+  const [topics, setTopics] = useState(false);
+  const [isFetching, setIsFetching] = useState(false);
+
+  useEffect(() => {
+    async function fetchTopics() {
+      setIsFetching(() => true);
+      await TopicService.listAll(props.user.token).then(
+        (response) => {
+          setTopics(response.data.data.topics);
+          setIsFetching(() => false);
+        },
+        (error) => {
+          props.displayError(error);
+          setIsFetching(() => false);
+        }
+      );
+    }
+    fetchTopics();
+    return () => {
+      setTopics(false);
+    };
+  }, []);
+
   const {
     register,
     handleSubmit,
@@ -19,30 +45,60 @@ const EditProfileModal = (props) => {
     control,
     formState: { errors },
   } = useForm({
-        defaultValues: {
-          first_name: props.user.type === USER_TYPE.BUSINESS ? undefined : props.user.first_name ,
-          last_name: props.user.type === USER_TYPE.BUSINESS ? undefined : props.user.last_name,
-          occupation: props.user.type === USER_TYPE.BUSINESS ? undefined : props.user.occupation,
-          day: props.user.type === USER_TYPE.BUSINESS ? undefined : props.user.dob.day,
-          month: props.user.type === USER_TYPE.BUSINESS ? undefined :  props.user.dob.month,
-          year: props.user.type === USER_TYPE.BUSINESS ? undefined : props.user.dob.year,
-          
-          business_name: props.user.type === USER_TYPE.PERSONAL ? undefined : props.user.business_name ,
-          business_type: props.user.type === USER_TYPE.PERSONAL ? undefined : props.user.business_type,
-          business_address: props.user.type === USER_TYPE.PERSONAL ? undefined : props.user.business_address,
-          phoneNumber: props.user.type === USER_TYPE.PERSONAL ? undefined : props.user.phoneNumber,
-          
-          type: props.user.type,
-          about: props.user.about,
-          username: props.user.username,
-          email: props.user.email,
-        }
-      });
+    defaultValues: {
+      first_name:
+        props?.user?.type === USER_TYPE.BUSINESS
+          ? undefined
+          : props?.user?.first_name,
+      last_name:
+        props?.user?.type === USER_TYPE.BUSINESS
+          ? undefined
+          : props?.user?.last_name,
+      occupation:
+        props?.user?.type === USER_TYPE.BUSINESS
+          ? undefined
+          : props?.user?.occupation,
+      day:
+        props?.user?.type === USER_TYPE.BUSINESS
+          ? undefined
+          : props?.user?.dob?.day,
+      month:
+        props?.user?.type === USER_TYPE.BUSINESS
+          ? undefined
+          : props?.user?.dob?.month,
+      year:
+        props?.user?.type === USER_TYPE.BUSINESS
+          ? undefined
+          : props?.user?.dob?.year,
+
+      business_name:
+        props?.user?.type === USER_TYPE.PERSONAL
+          ? undefined
+          : props?.user?.business_name,
+      business_type:
+        props?.user?.type === USER_TYPE.PERSONAL
+          ? undefined
+          : props?.user?.business_type,
+      business_address:
+        props?.user?.type === USER_TYPE.PERSONAL
+          ? undefined
+          : props?.user?.business_address,
+      phoneNumber:
+        props?.user?.type === USER_TYPE.PERSONAL
+          ? undefined
+          : props?.user?.phoneNumber,
+
+      type: props?.user?.type,
+      about: props?.user?.about,
+      username: props?.user?.username,
+      email: props?.user?.email,
+    },
+  });
   const { handleChange, resetFormErrors } = useFormHandler(clearErrors);
 
- const submitHandler = (data) => {
+  const submitHandler = (data) => {
     resetFormErrors();
-    props.updateProfile(data).then(()=>props.setOpen(false));
+    props.updateProfile(data).then(() => props.setOpen(false));
   };
 
   const days = Array.from({ length: 31 }, (_, i) => i + 1);
@@ -72,7 +128,10 @@ const EditProfileModal = (props) => {
   }
 
   const form = () => (
-    <form className="mt-5 space-y-5"  onSubmit={handleSubmit(submitHandler)}>
+    <form
+      className="flex flex-col gap-4"
+      onSubmit={handleSubmit(submitHandler)}
+    >
       <Input
         type="hidden"
         name="type"
@@ -81,60 +140,61 @@ const EditProfileModal = (props) => {
         }}
       />
       <EmptySpace height="10px" />
-      {props.user.type == USER_TYPE.PERSONAL && (<>
-            <div className="">
-        <Input
-          type="text"
-          label="First Name"
-          placeholder="Demarai"            
-          name="first_name"
-          register={{
-            ...register("first_name", {
-              onChange: handleChange,
-              required: "This field is required",
-              minLength: {
-                value: 3,
-                message: "First name should be at least 3 characters long",
-              },
-              maxLength: {
-                value: 20,
-                message: "First name should be less then 20 characters",
-              },
-            }),
-          }}
-          error={
-            errors.first_name?.message || props.common.errors?.first_name
-          }
-        />
-      </div>
-      <div className="">
-        <Input
-          type="text"
-          label="Last Name"
-          name="last_name"
-          placeholder="Gray"
-          register={{
-            ...register("last_name", {
-              onChange: handleChange,
-              required: "This field is required",
-              minLength: {
-                value: 3,
-                message: "Last name should be at least 3 characters long",
-              },
-              maxLength: {
-                value: 20,
-                message: "Last name should be less then 20 characters",
-              },
-            }),
-          }}
-          error={
-            errors.last_name?.message || props.common.errors?.last_name
-          }
-        />
-      </div>
-      </>)}
+      {props?.user?.type == USER_TYPE.PERSONAL && (
+        <>
+          <div className="">
+            <Input
+              type="text"
+              label="First Name"
+              placeholder="Demarai"
+              name="first_name"
+              register={{
+                ...register("first_name", {
+                  onChange: handleChange,
+                  required: "This field is required",
+                  minLength: {
+                    value: 3,
+                    message: "First name should be at least 3 characters long",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "First name should be less then 20 characters",
+                  },
+                }),
+              }}
+              error={
+                errors?.first_name?.message || props?.common?.errors?.first_name
+              }
+            />
+          </div>
+          <div className="">
+            <Input
+              type="text"
+              label="Last Name"
+              name="last_name"
+              placeholder="Gray"
+              register={{
+                ...register("last_name", {
+                  onChange: handleChange,
+                  required: "This field is required",
+                  minLength: {
+                    value: 3,
+                    message: "Last name should be at least 3 characters long",
+                  },
+                  maxLength: {
+                    value: 20,
+                    message: "Last name should be less then 20 characters",
+                  },
+                }),
+              }}
+              error={
+                errors.last_name?.message || props.common.errors?.last_name
+              }
+            />
+          </div>
+        </>
+      )}
 
-   
       <div className="">
         <Input
           type="text"
@@ -182,96 +242,119 @@ const EditProfileModal = (props) => {
           error={errors.email?.message || props.common.errors?.email}
         />
       </div>
-       {props.user.type == USER_TYPE.PERSONAL && (<>
-      <div className="">
-        <Input
-          type="text"
-          label="Occupation"
-          name="occupation"
-          placeholder="What do you do for living?"
-          register={{
-            ...register("occupation", {
-              onChange: handleChange,
-              minLength: {
-                value: 3,
-                message: "Occupation should be at least 3 characters long",
-              },
-              maxLength: {
-                value: 30,
-                message: "Occupation should be less then 20 characters",
-              },
-            }),
-          }}
-          error={
-            errors.occupation?.message || props.common.errors?.occupation
-          }
-        />
-      </div>
-      <div>
-        <div>
-          <label
-            className={`text-[2A2A2A] font-openSans_regular lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px]`}
-          >
-            Date of Birth
-          </label>
-          <div className="flex justify-between w-full">
+      {props?.user?.type == USER_TYPE.PERSONAL && (
+        <>
+          <div>
             <div>
-              <Select
-                  name="day"
-                  register={{
-                    ...register("day", {
-                      onChange: handleChange,
-                    }),
-                  }}>
-                <option value="">Day</option>
-                  {days.map((day) => (
-                    <option key={day} value={day}>
-                      {day}
-                    </option>
-                  ))}
-              </Select>
-            </div>
-            <div>
-              <Select 
-                  name="month"
-                  register={{
-                    ...register("month", {
-                      onChange: handleChange,
-                    }),
-                  }}>
-                <option value="">Month</option>
-                  {months.map((month, index) => (
-                    <option key={index} value={index + 1} >
-                      {month}
-                    </option>
-                  ))}
-              </Select>
-            </div>
-            <div>
-              <Select
-                  name="year"
-                  register={{
-                    ...register("year", {
-                      onChange: handleChange,
-                      min: { value: 1900, message: "Invalid Year" },
-                      max: {
-                        value: new Date().getFullYear() - 18,
-                        message: "Invalid Year",
-                      },
-                    }),
-                  }}>
-                <option value="">year</option>
-                  {yearoptions}
-              </Select>
+              <label
+                className={`text-[2A2A2A] font-openSans_regular lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px]`}
+              >
+                Date of Birth
+              </label>
+              <div className="flex justify-between w-full">
+                <div>
+                  <Select
+                    name="day"
+                    register={{
+                      ...register("day", {
+                        onChange: handleChange,
+                      }),
+                    }}
+                  >
+                    <option value="">Day</option>
+                    {days.map((day) => (
+                      <option key={day} value={day}>
+                        {day}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+                <div>
+                  <Select
+                    name="month"
+                    register={{
+                      ...register("month", {
+                        onChange: handleChange,
+                      }),
+                    }}
+                  >
+                    <option value="">Month</option>
+                    {months.map((month, index) => (
+                      <option key={index} value={index + 1}>
+                        {month}
+                      </option>
+                    ))}
+                  </Select>
+                </div>
+                <div>
+                  <Select
+                    name="year"
+                    register={{
+                      ...register("year", {
+                        onChange: handleChange,
+                        min: { value: 1900, message: "Invalid Year" },
+                        max: {
+                          value: new Date().getFullYear() - 18,
+                          message: "Invalid Year",
+                        },
+                      }),
+                    }}
+                  >
+                    <option value="">year</option>
+                    {yearoptions}
+                  </Select>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-      </>)}
-      
-       {props.user.type == USER_TYPE.BUSINESS && (<>
+          <div className="  mb-2">
+            <Select
+              label="Gender"
+              name="gender"
+              id="gender"
+              error={errors.gender?.message || props.common.errors?.gender}
+              register={{
+                ...register("gender", {
+                  onChange: handleChange,
+                }),
+              }}
+            >
+              <option value="">Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </Select>
+          </div>
           <div className="">
-        <Input
+            <Input
+              type="text"
+              label="Occupation"
+              name="occupation"
+              placeholder="What do you do for living?"
+              register={{
+                ...register("occupation", {
+                  onChange: handleChange,
+                  minLength: {
+                    value: 3,
+                    message: "Occupation should be at least 3 characters long",
+                  },
+                  maxLength: {
+                    value: 30,
+                    message: "Occupation should be less then 20 characters",
+                  },
+                }),
+              }}
+              error={
+                errors.occupation?.message || props.common.errors?.occupation
+              }
+            />
+          </div>
+        </>
+      )}
+
+      {props?.user?.type == USER_TYPE.BUSINESS && (
+        <>
+          <div className="">
+            <Input
               type="text"
               label="Full Business Name"
               name="business_name"
@@ -295,10 +378,10 @@ const EditProfileModal = (props) => {
                 errors.business_name?.message ||
                 props.common.errors?.business_name
               }
-        />
-      </div>
-                <div className="">
-        <Input
+            />
+          </div>
+          <div className="">
+            <Input
               label="Business Type"
               type="text"
               name="business_type"
@@ -322,9 +405,9 @@ const EditProfileModal = (props) => {
                 errors.business_type?.message ||
                 props.common.errors?.business_type
               }
-        />
-      </div>
-                <div className="form-group">
+            />
+          </div>
+          <div className="form-group">
             <Input
               type="text"
               label="Business Phone Number"
@@ -354,7 +437,7 @@ const EditProfileModal = (props) => {
               }
             />
           </div>
-                    <div className="form-group">
+          <div className="form-group">
             <Input
               type="text"
               label="Full Business Address"
@@ -381,7 +464,8 @@ const EditProfileModal = (props) => {
               }
             />
           </div>
-      </>)}
+        </>
+      )}
       <div className="">
         <Textarea
           label="Tell us about yourself"
@@ -403,6 +487,21 @@ const EditProfileModal = (props) => {
           error={errors.about?.message || props.common.errors?.about}
         />
       </div>
+      <div>
+        <label htmlFor="">What are your Interests</label>
+        <div className="flex flex-row flex-wrap gap-3  h-full overflow-y-auto mt-3">
+          {isFetching && <p>Fetching Topics...</p>}
+          {topics && (
+            <CheckboxGroup
+              options={topics}
+              control={control}
+              name="interests"
+              indexKey="_id"
+              value="name"
+            />
+          )}
+        </div>
+      </div>
 
       <EmptySpace height="60px" />
 
@@ -410,7 +509,7 @@ const EditProfileModal = (props) => {
         <Button
           disabled={props.common.form_loder === 1}
           isLoading={props.common.form_loder === 1}
-          text={"Continue"} 
+          text={"Continue"}
         />
       </div>
       <EmptySpace height="20px" />
@@ -429,12 +528,12 @@ const EditProfileModal = (props) => {
   );
 };
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   common: state.common,
-  user: state.auth.user
-})
-const mapDispatchToProps = dispatch => ({
-  updateProfile: data => dispatch(updateProfileAction(data))
-})
+  user: state.auth.user,
+});
+const mapDispatchToProps = (dispatch) => ({
+  updateProfile: (data) => dispatch(updateProfileAction(data)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileModal);

@@ -5,7 +5,7 @@ const WebinarInfoCard = () => {
     <Fragment>
       <div>
         <div className="bg-white rounded-2xl">
-          <div className="lg:min-h-[463px] flex justify-center rounded-full lg:aspect-video aspect-square">
+          <div className="lg:min-h-[463px] w-full flex justify-center rounded-full lg:aspect-video aspect-square">
             <img
               className="object-cover w-full rounded-t-2xl "
               src="https://students.unimelb.edu.au/__data/assets/image/0005/4508357/EmpWk2023_EventTiles_700x350px_MASTER_FILE_PITCHING.png"

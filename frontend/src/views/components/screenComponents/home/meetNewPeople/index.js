@@ -1,5 +1,6 @@
 import { Images } from "config/images";
 import React from "react";
+import { Link } from "react-router-dom";
 const { arrowRightIcon, musicIon, doubleArrowRightBlueIcon } = Images;
 
 const MeetNewPeopleList = () => (
@@ -49,12 +50,18 @@ const MeetNewPeople = () => {
             {Array.from({ length: 5 })?.map((item) => (
               <MeetNewPeopleList />
             ))}
-
-            <div className="flex justify-center items-center space-x-2 cursor-pointer">
-              <span className=" text-c_0493A3 text-[12px] font-openSans_light">
-                See More People
-              </span>
-              <img src={doubleArrowRightBlueIcon.default} />
+            <div className="flex justify-center">
+              <div className="inline-block">
+                <Link
+                  to="/friends"
+                  className="flex justify-center items-center space-x-2 cursor-pointer"
+                >
+                  <span className=" text-c_0493A3 text-[12px] font-openSans_light">
+                    See More People
+                  </span>
+                  <img src={doubleArrowRightBlueIcon.default} />
+                </Link>
+              </div>
             </div>
           </div>
         </>

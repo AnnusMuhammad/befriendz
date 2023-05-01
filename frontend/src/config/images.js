@@ -6,6 +6,7 @@ export const Images = {
   crossIcon: require("../assets/images/x.svg"),
   medalStarIcon: require("../assets/images/medalStar.svg"),
   newIcon: require("../assets/images/new.svg"),
+  newBlackIcon: require("../assets/images/newBlack.svg"),
   starIcon: require("../assets/images/star.svg"),
   friendsIcon: require("../assets/images/profile-2user.svg"),
   musicIon: require("../assets/images/music.svg"),
@@ -61,11 +62,12 @@ export const Images = {
   callIcon: require(`../assets/images/call.svg`),
   videoIcon: require(`../assets/images/video.svg`),
   minimizeIcon: require(`../assets/images/DownArrow.svg`),
+  maximizeArrow: require(`../assets/images/maximizeArrow.svg`),
   expandIcon: require(`../assets/images/Expand.svg`),
   playIcon: require("../assets/images/Play.svg"),
   sendIcon: require("../assets/images/Send.svg"),
   voiceIcon: require("../assets/images/Voice.svg"),
-
+  fastestGrowingIcon: require("../assets/images/fastestGrowing.svg"),
   starBadeIcon: require("../assets/images/starBadge.svg"),
 
   //Header Icons
@@ -95,4 +97,15 @@ export const Images = {
   crypto: require("../assets/images/crypto.svg"),
   doubleArrowRightBlueIcon: require("../assets/images/doubleArrowRightBlue.svg"),
   xRedIcon: require("../assets/images/xRed.svg"),
+  greyBadgeIcon: require("../assets/images/greyBadgeIcon.svg"),
+  callOutGoing: require("../assets/images/callOutGoing.svg"),
+  userProfile: require("../assets/images/userProfile.svg"),
+  settings: require("../assets/images/settings.svg"),
+  shareIcon: require("../assets/images/shareWhite.svg"),
+  leaveIcon: require("../assets/images/leave.svg"),
+  searchMagnifyIcon: require("../assets/images/searchMagnify.svg"),
+  starYellowIcon: require("../assets/images/staryellow.svg"),
+  dustbinIcon: require("../assets/images/dustbin.svg"),
+  masterCardIcon: require("../assets/images/masterCard.svg"),
+  searchIcon: require("../assets/images/serach.svg"),
 };

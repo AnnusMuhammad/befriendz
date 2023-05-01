@@ -3,14 +3,15 @@ import PlaceAd from "views/components/shared/placeAd";
 import Post from "views/components/shared/post";
 import MeetNewPeople from "../meetNewPeople";
 import WantToBeFriends from "../wantToBeFriends";
+import AddPost from "../addPost";
 
 const MainContent = () => {
   const rightSide = () => (
     <>
+      <WantToBeFriends />
       <PlaceAd />
       <MeetNewPeople />
       <PlaceAd />
-      <WantToBeFriends />
     </>
   );
   return (
@@ -21,8 +22,11 @@ const MainContent = () => {
             <div className="xl:space-y-0 space-y-10 ">
               <aside className="xl:hidden space-y-6">{rightSide()}</aside>
               <div className="space-y-5">
+                <div>
+                  <AddPost />
+                </div>
                 {Array?.from({ length: 10 })?.map(() => (
-                  <Post />
+                  <Post linkTo="/view-post" />
                 ))}
                 {Post}
               </div>

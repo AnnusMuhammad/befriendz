@@ -8,7 +8,7 @@ import Modal from "views/components/shared/modal";
 const PaymentModal = ({ open, setOpen }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const form = () => (
-    <form className="mt-5 space-y-5">
+    <form className=" ">
       <EmptySpace height="10px" />
       <div className="">
         <Input
@@ -58,8 +58,8 @@ const PaymentModal = ({ open, setOpen }) => {
     <Modal
       open={open}
       setOpen={setOpen}
-      title={"Add Payment Info"}
-      subTitle={"Get paid for your services"}
+      title={currentStep === 1 ? "Add Payment Info" : ""}
+      subTitle={currentStep === 1 ? "Get paid for your services" : ""}
     >
       {currentStep === 1 ? form() : success()}
     </Modal>

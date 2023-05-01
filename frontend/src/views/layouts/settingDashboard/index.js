@@ -10,7 +10,6 @@ export default function SettingDashBoard({ nav }) {
 
   return (
     <BaseLayout>
-      <Header />
       <div className="flex min-h-full">
         <Transition.Root show={sidebarOpen} as={Fragment}>
           <Dialog
@@ -100,7 +99,7 @@ export default function SettingDashBoard({ nav }) {
           <main className="flex-1 bg-[#F7F7F7] min-h-screen">{<Outlet />}</main>
         </div>
       </div>
-       {/* <Chat /> */}
+      {/* <Chat /> */}
     </BaseLayout>
   );
 }

@@ -50,7 +50,7 @@ const AddProduct = () => {
           {image && <div>{image.name}</div>}
         </div>
         <div className="w-full ">
-          <CustomEditor />
+          <CustomEditor placeholder="Write a product description here" />
         </div>
         <div className="w-full mt-[15px]">
           <label className="text-[#2A2A2A] text-[16px] font-openSans_regular">

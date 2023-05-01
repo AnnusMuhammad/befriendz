@@ -1,7 +1,10 @@
-import React, { Fragment, useState } from "react";
+import { Fragment, useState } from "react";
+import AdsManagementTable from "views/components/screenComponents/settings/adsManagement/adsManagementTable";
+import AudienceInsights from "views/components/screenComponents/settings/adsManagement/audienceInsights";
 import BudgetsAndScheduleForm from "views/components/screenComponents/settings/adsManagement/budegtsAndScheduleForm";
 import CreateAd from "views/components/screenComponents/settings/adsManagement/createAd";
 import ManageAdForm from "views/components/screenComponents/settings/adsManagement/manageAdForm";
+import TableSearchAndFilter from "views/components/shared/tableSearch";
 
 const AdsManagement = () => {
   const [currentView, setCurrentView] = useState({
@@ -25,9 +28,13 @@ const AdsManagement = () => {
                       Ads Management
                     </span>
                   </div>
-                  <div>button</div>
+
+                  <div>
+                    <TableSearchAndFilter />
+                  </div>
                 </div>
                 <div className="h-1 bg-c_FD6769 w-full rounded-full"></div>
+                <AdsManagementTable />
               </div>
             </div>
           </div>
@@ -47,19 +54,20 @@ const AdsManagement = () => {
               <aside className="xl:hidden">
                 <ManageAdForm />
               </aside>
-              <div className="bg-white px-4 rounded-2xl min-h-screen">
+              <div className="bg-white px-4 pl-10 rounded-2xl min-h-screen">
                 <div className="pb-5 pt-10 flex w-full justify-between items-center flex-wrap">
                   <div>
-                    <span className="text-[#2A2A2A] font-openSans_bold text-[24px]">
+                    <span className="ml-6 text-[#2A2A2A] font-openSans_bold text-[24px]">
                       Instagram Post
                     </span>
                   </div>
                 </div>
+                <div></div>
                 <div className="h-1 bg-c_FD6769 w-full rounded-full"></div>
+                <AudienceInsights />
 
                 {/* budgets and schedule form */}
                 <BudgetsAndScheduleForm />
-                
               </div>
             </div>
           </div>

@@ -1,6 +1,7 @@
+import SideBarSkeleton from "views/components/skeletons/profile/sidebar";
 import { Images } from "config/images";
-import { connect } from "react-redux";
 import { USER_TYPE } from "constants/user.constant";
+import FrendRequestButton from "views/components/shared/friendRequest/button";
 
 const friends = [
   "https://media.licdn.com/dms/image/C4D03AQGg7qCuHavEdg/profile-displayphoto-shrink_200_200/0/1521010848026?e=1684972800&v=beta&t=dHLiCBHVZ8eXFgRx5RvfuTKIPuhhN0gf2q9cYsEivjU",
@@ -13,17 +14,24 @@ const friends = [
 ];
 
 const { starBadeIcon } = Images;
-const SideBar = ({user, setOpen }) => {
+
+const SideBarContent = ({
+  user,
+  friendStatus,
+  setOpen,
+  isMyProfile,
+  setIsBecomeLifeCoachModalOpen,
+}) => {
   return (
-    <div className="bg-white rounded-2xl">
+    <>
       {/* profile cover & image */}
       <div className="relative min-h-[190px]">
         <div className="h-[100px] bg-cover rounded-t-2xl bg-[#FD6769]"></div>
         <div className="absolute top-16 w-full flex justify-center">
           <img
             className="w-[120px] h-[120px] rounded-full outline outline-white object-cover"
-            src={user.profileImage}
-            alt={user.username}
+            src={user?.profileImage}
+            alt={user?.username}
           />
         </div>
       </div>
@@ -33,18 +41,22 @@ const SideBar = ({user, setOpen }) => {
         <div className="text-center">
           <div>
             <span className="text-[26px] text-[#515165] font-openSans_medium">
-              { user.type === USER_TYPE.PERSONAL ? `${user.first_name} ${user.last_name}` : user.business_name}
+              {user?.type === USER_TYPE?.PERSONAL
+                ? `${user?.first_name} ${user?.last_name}`
+                : user?.business_name}
             </span>
           </div>
           <div>
             <span className="text-[#949494] text-[16px] font-openSans_regular">
-              { user.type === USER_TYPE.PERSONAL ?user.occupation : user.business_type}
+              {user?.type === USER_TYPE.PERSONAL
+                ? user?.occupation
+                : user?.business_type}
             </span>
           </div>
-          { user.type === USER_TYPE.BUSINESS && (
+          {user?.type === USER_TYPE.BUSINESS && (
             <div>
               <span className="text-[#949494] text-[12px] font-openSans_medium">
-                {user.business_address}
+                {user?.business_address}
               </span>
             </div>
           )}
@@ -53,25 +65,39 @@ const SideBar = ({user, setOpen }) => {
         <div className="text-center">
           <div>
             <span className="text-[14px] text-[#949494] font-openSans_medium">
-              {user.about}
+              {user?.about}
             </span>
           </div>
         </div>
-        {user.interests && user.interests.length > 0 && (
-        <div className="flex space-x-1 flex-wrap text-center justify-center">
-          {user.interests?.map((item) => (
-            <span className="rounded-2xl bg-[#f4646b] py-1 mt-[5px] px-2 font-openSans_semiBold text-[#fff] text-[10px]">
-              {item.name}
-            </span>
-          ))}
-        </div>)}
+
+        {user?.interests && user?.interests.length > 0 && (
+          <div className="flex space-x-1 flex-wrap text-center justify-center">
+            {user?.interests?.map((item, key) => (
+              <span
+                key={key}
+                className="rounded-2xl bg-[#f4646b] py-1 mt-[5px] px-2 font-openSans_semiBold text-[#fff] text-[10px]"
+              >
+                {item.name}
+              </span>
+            ))}
+          </div>
+        )}
+
         <div className="flex w-full justify-center">
-          <button
-            className="bg-[#F5F5F5] min-h-[36px] min-w-[124px] rounded text-[#2A2A2A] text-[16px] font-openSans_medium"
-            onClick={() => setOpen(true)}
-          >
-            Edit Profile
-          </button>
+          {isMyProfile ? (
+            <button
+              className="bg-[#F5F5F5] min-h-[36px] min-w-[124px] rounded text-[#2A2A2A] text-[16px] font-openSans_medium"
+              onClick={() => setOpen(true)}
+            >
+              Edit Profile
+            </button>
+          ) : (
+            <>
+              {friendStatus && (
+                <FrendRequestButton friendStatus={friendStatus} user={user} />
+              )}
+            </>
+          )}
         </div>
 
         {/* friends */}
@@ -83,39 +109,50 @@ const SideBar = ({user, setOpen }) => {
           </div>
           <div>
             <div className="flex flex-wrap justify-center gap-4">
-              {friends?.map((item) => (
+              {friends?.map((item, index) => (
                 <img
+                  key={index}
                   className="w-[30px] h-[30px] rounded-full object-cover"
                   src={item}
                 />
               ))}
             </div>
           </div>
-        </div>
-        <div>
-          <div className="flex w-full justify-center items-center space-x-2">
-            <div>
-              <img src={starBadeIcon.default} />
-            </div>
-            <div>
-              <span className="text-[#0493A3] text-[14px] font-openSans_bold">
-                Become a Life Coach
-              </span>
+          <div className="flex justify-center">
+            <div className="inline-block">
+              <div
+                onClick={() => setIsBecomeLifeCoachModalOpen(true)}
+                className="flex w-full justify-center items-center space-x-2 cursor-pointer"
+              >
+                <div>
+                  <img src={starBadeIcon.default} alt="star-badge" />
+                </div>
+                <div>
+                  <span className="text-[#0493A3] text-[14px] font-openSans_bold">
+                    Become a Life Coach
+                  </span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        <div className="text-center pt-5 pb-7 border-t border-[#E6F4F6] mx-3">
-          <span className="text-[#949494] text-[14px] font-openSans_medium">
-            joined {user.createdAt}
-          </span>
+          <div className="text-center pt-5 pb-7 border-t border-[#E6F4F6] mx-3">
+            <span className="text-[#949494] text-[14px] font-openSans_medium">
+              joined {user?.createdAt}
+            </span>
+          </div>
         </div>
       </div>
+    </>
+  );
+};
+
+const SideBar = (props) => {
+  const { isFetching, ...rest } = props;
+  return (
+    <div className="bg-white rounded-2xl">
+      {!isFetching ? <SideBarContent {...rest} /> : <SideBarSkeleton />}
     </div>
   );
 };
 
-const mapStateToProps = state => ({
-  user: state.auth.user
-})
-
-export default connect(mapStateToProps)(SideBar);
+export default SideBar;

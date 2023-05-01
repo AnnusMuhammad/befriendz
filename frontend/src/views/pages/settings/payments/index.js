@@ -1,7 +1,10 @@
 import { Images } from "config/images";
 import { Fragment, useState } from "react";
+import BillingHistory from "views/components/screenComponents/settings/payments/billingHistory";
+import PaymentInformation from "views/components/screenComponents/settings/payments/paymentInformation";
 import CardInfo from "views/components/screenComponents/settings/payments/cardInfo";
 import PaymentModal from "views/components/screenComponents/settings/payments/paymentModal";
+import SavedCards from "views/components/screenComponents/settings/payments/savedCards";
 const { addPaymentIcon } = Images;
 
 const Payments = () => {
@@ -37,6 +40,11 @@ const Payments = () => {
                     </div>
                   </div>
                   <div className="h-1 bg-c_FD6769 w-full rounded-full"></div>
+                  <div className="space-y-5">
+                    <PaymentInformation />
+                    <SavedCards />
+                    <BillingHistory />
+                  </div>
                 </div>
               </div>
             </div>

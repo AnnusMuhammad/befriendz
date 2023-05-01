@@ -28,7 +28,7 @@ const spinner = () => (
 
 
 const Button = (props) => {
-  const { isLoading = false, text = "", className = "", ...rest } = props;
+  const { isLoading = false, text = "", className = "", children,  ...rest } = props;
   return (
     <button
       className={`lg:text-[16px] md:text-[15px] sm:text-[14px] text-[13px] text-white bg-[#FD6769] min-h-[60px] w-full rounded-full font-openSans_bold text-center hover:brightness-110 cursor-pointer ${className}`}
@@ -37,7 +37,7 @@ const Button = (props) => {
 
       {isLoading ? <>
         {spinner()}
-      </> : <>{text}</>}
+      </> : <>{children ? children : text}</>}
     </button>
   );
 };

@@ -1,7 +1,9 @@
+import { APP_CONSTANT } from "constants/app.constant";
 import { useState } from "react";
 import EmptySpace from "views/components/shared/emptySpace";
 import Button from "views/components/shared/form-elements/button";
 import Input from "views/components/shared/form-elements/input";
+import InputFile from "views/components/shared/form-elements/inputFile";
 import Message from "views/components/shared/message";
 import Modal from "views/components/shared/modal";
 
@@ -61,7 +63,43 @@ const BecomeLifeCoachModal = ({ open, setOpen }) => {
         </span>
       </div>
       <EmptySpace height="40px" />
+      <div className="flex justify-center mb-5">
+        <InputFile
+          type="file"
+          name="profileImage"
+          accept="image/*"
+          labelClass="blue"
+          // size="w-full h-40 rounded-0"
+          imageRadius="rounded-0"
+          register={{
+            ...("profileImage",
+            {
+              onChange: () => {},
+              validate: {
+                acceptedFormats: (files) => {
+                  return (
+                    files,
+                    APP_CONSTANT.FILE.EXT.IMAGE,
+                    "Only PNG, JPEG and GIF are allowed"
+                  );
+                },
 
+                lessThan10MB: (files) => (
+                  files, APP_CONSTANT.FILE.SIZE["10MB"], "Max 10MB"
+                ),
+              },
+            }),
+          }}
+        />
+      </div>
+      <EmptySpace height="50px" />
+      <div>
+        <span className="text-[#949494] text-[12px] font-openSans_regular">
+          Only JPEG,PNG and PDF are the formats accepted and not more than 2kb
+          in size
+        </span>
+      </div>
+      <EmptySpace height="10px" />
       <div className="">
         <Button text={"Continue"} onClick={() => setCurrentStep(3)} />
       </div>
@@ -78,6 +116,43 @@ const BecomeLifeCoachModal = ({ open, setOpen }) => {
         </span>
       </div>
       <EmptySpace height="40px" />
+      <div className="flex justify-center mb-5">
+        <InputFile
+          type="file"
+          name="profileImage"
+          accept="image/*"
+          labelClass="blue"
+          // size="w-full h-40 rounded-0"
+          imageRadius="rounded-0"
+          register={{
+            ...("profileImage",
+            {
+              onChange: () => {},
+              validate: {
+                acceptedFormats: (files) => {
+                  return (
+                    files,
+                    APP_CONSTANT.FILE.EXT.IMAGE,
+                    "Only PNG, JPEG and GIF are allowed"
+                  );
+                },
+
+                lessThan10MB: (files) => (
+                  files, APP_CONSTANT.FILE.SIZE["10MB"], "Max 10MB"
+                ),
+              },
+            }),
+          }}
+        />
+      </div>
+      <EmptySpace height="50px" />
+      <div>
+        <span className="text-[#949494] text-[12px] font-openSans_regular">
+          Only JPEG,PNG and PDF are the formats accepted and not more than 2kb
+          in size
+        </span>
+      </div>
+      <EmptySpace height="10px" />
 
       <div className="">
         <Button text={"Submit"} onClick={() => setCurrentStep(4)} />

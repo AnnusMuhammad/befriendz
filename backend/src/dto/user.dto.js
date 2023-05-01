@@ -35,6 +35,7 @@ const UserDto = (data) => {
     isVerified: data && data?.isVerified ? data.isVerified : null,
     type: data && data?.type ? data.type : null,
     interests: data && data?.interests ? data.interests : [],
+    friends: data && data?.friends ? data.friends : [],
     createdAt: data && data?.createdAt ? new Date(data.createdAt).toLocaleDateString(APP_CONSTANT.LOCALE_DATE_STRING, {day: 'numeric', month: 'short', year: 'numeric'}) : null,
   };
 };

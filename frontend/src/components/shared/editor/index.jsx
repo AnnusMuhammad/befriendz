@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "./editor.css";
 
-const CustomEditor = ({ value = "", setValue }) => {
+const CustomEditor = ({ value = "", setValue, placeholder }) => {
   const modules = {
     toolbar: [
       [{ header: 1 }],
@@ -41,7 +41,7 @@ const CustomEditor = ({ value = "", setValue }) => {
         value={value}
         onChange={setValue}
         formats={formats}
-        placeholder="Write a product description here"
+        placeholder={placeholder}
         modules={modules}
         className="text-dark min-h-[300px] rounded-xl border border-x-c_F5F5F5 overflow-hidden"
       />

@@ -2,11 +2,13 @@ import { Fragment } from "react";
 import Post from "../post";
 import Comments from "../comments";
 import AuthorProfile from "../authorProfile";
+import MorePost from "views/components/shared/morePost";
 
 const MainContent = () => {
   const rightSide = () => (
     <>
       <AuthorProfile />
+      <MorePost postBy="Skubla Ven"/>
     </>
   );
   return (

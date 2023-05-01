@@ -2,6 +2,8 @@ import { Switch } from "@headlessui/react";
 import { useState } from "react";
 import Checkbox from "views/components/shared/form-elements/checkbox";
 import NotificationCheckBox from "../notificationCheckBox";
+import CustomGreenCheckbox from "views/components/shared/CustomGreenCheckbox";
+import CustomSwitch from "./CustomSwitch";
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
@@ -17,31 +19,17 @@ const NotificationListItem = ({ item, ...rest }) => {
             {item?.label}
           </h3>
           <div>
-            <Switch
-              checked={enabled}
-              onChange={setEnabled}
-              className={classNames(
-                enabled ? "bg-[#30B52D]" : "bg-[#F5F5F5]",
-                "relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none"
-              )}
-            >
-              <span className="sr-only">Use setting</span>
-              <span
-                aria-hidden="true"
-                className={classNames(
-                  enabled
-                    ? "bg-white translate-x-5"
-                    : "bg-[#949494] translate-x-0",
-                  "pointer-events-none inline-block h-5 w-5 transform rounded-full shadow ring-0 transition duration-200 ease-in-out"
-                )}
-              />
-            </Switch>
+            <CustomSwitch enabled={enabled} setEnabled={setEnabled} />
           </div>
         </div>
       </div>
       <div className="mt-5 space-y-2 max-w-sm">
         {checkBoxArray?.map((item) => (
-          <NotificationCheckBox label={item} className={`${!enabled && "opacity-50"}`}/>
+          <NotificationCheckBox
+            label={item}
+            className={`${!enabled && "opacity-50"}`}
+            disabled={!enabled}
+          />
         ))}
       </div>
     </div>

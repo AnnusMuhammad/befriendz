@@ -3,7 +3,7 @@ import { useState } from "react";
 import InputError from "./inputError";
 const { blueCamera, camera } = Images;
 const InputFile = (props) => {
-  const { register, error, labelClass, ...rest } = props;
+  const { register, error, labelClass, size = "", ...rest } = props;
   const { onChange } = register;
 
   const clickHandler = (e) => {
@@ -32,7 +32,7 @@ const InputFile = (props) => {
           labelClass == "blue"
             ? "rounded-xl bg-[#E6F4F6]"
             : "rounded-full bg-[#FFE1E1]"
-        } `}
+        } ${size}`}
       >
         {image ? (
           <img

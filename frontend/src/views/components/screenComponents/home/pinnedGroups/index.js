@@ -1,5 +1,6 @@
 import { Images } from "config/images";
 import React from "react";
+import { Link } from "react-router-dom";
 const { arrowRightIcon, musicIon, doubleArrowRightBlueIcon } = Images;
 
 const PinnedGroupsList = () => (
@@ -37,12 +38,18 @@ const PinnedGroups = () => {
             {Array.from({ length: 5 })?.map((item) => (
               <PinnedGroupsList />
             ))}
-
-            <div className="flex justify-center items-center space-x-2 cursor-pointer">
-              <span className=" text-c_0493A3 text-[12px] font-openSans_light">
-                Explore
-              </span>
-              <img src={doubleArrowRightBlueIcon.default} />
+            <div className="flex justify-center">
+              <div className="inline-block">
+                <Link
+                  to="/group-webinar-training"
+                  className="flex justify-center items-center space-x-2 cursor-pointer"
+                >
+                  <span className=" text-c_0493A3 text-[12px] font-openSans_light">
+                    Explore
+                  </span>
+                  <img src={doubleArrowRightBlueIcon.default} />
+                </Link>
+              </div>
             </div>
           </div>
         </>
