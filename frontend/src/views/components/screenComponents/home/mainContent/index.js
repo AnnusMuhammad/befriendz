@@ -4,7 +4,7 @@ import Post from "views/components/shared/post";
 import MeetNewPeople from "../meetNewPeople";
 import WantToBeFriends from "../wantToBeFriends";
 import AddPost from "../addPost";
-
+import RightSideBar from "views/components/skeletons/rightSidebar/rightSidebar";
 const MainContent = ({data, isFetching}) => {
   const rightSide = () => (
     <>
@@ -36,7 +36,7 @@ const MainContent = ({data, isFetching}) => {
           </div>
         </div>
         <aside className="hidden xl:block col-span-2 space-y-6">
-          {!isFetching ? rightSide(): null}
+          {!isFetching ? rightSide(): <RightSideBar />}
         </aside>
       </div>
     </Fragment>

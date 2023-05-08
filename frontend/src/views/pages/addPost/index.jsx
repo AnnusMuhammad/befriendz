@@ -7,6 +7,7 @@ import Post from "../viewPost/Post";
 import PreviewPost from "./PreviewPost";
 import PageLayout from "views/layouts/page";
 import ImageFormPreview from "views/components/shared/form-elements/imageFormPreview";
+import { useLocation } from "react-router-dom";
 
 const AddPost = () => {
   const {
@@ -29,9 +30,13 @@ const AddPost = () => {
     { name: "Techology", icon: tech },
     { name: "Real State", icon: realState },
   ];
+
+  const location = useLocation();
+  const stateTitle = location?.state?.title;
+
   const [image, setImage] = useState(null);
   const [content, setContent] = useState(null);
-  const [title, setTitle] = useState(null);
+  const [title, setTitle] = useState(stateTitle || null);
   const [imageName, setImageName] = useState(null);
   const [selectedTags, setSelectedTags] = useState(null);
   const [isPreview, setIsPreview] = useState(false);

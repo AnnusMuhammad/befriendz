@@ -1,7 +1,7 @@
 import { Fragment } from "react";
 import FindFriends from "../findFriends";
 import FreindListItem from "views/components/shared/friendRequest";
-import FriendRequestSkeleton from "views/components/skeletons/friends/friendRequest";
+import FriendListSkeleton from "views/components/skeletons/friends/friend-list";
 import Search from "views/components/shared/search";
 
 const MainContent = ({ isFetching, friends, friendRequests, activeOPtion, onFriendStatusChange }) => {
@@ -76,7 +76,7 @@ const MainContent = ({ isFetching, friends, friendRequests, activeOPtion, onFrie
                         ) : (
                           <>
                             {Array.from({ length: 10 }).map((item, index) => (
-                              <FriendRequestSkeleton key={index}/>
+                              <FriendListSkeleton key={index}/>
                             ))}
                           </>
                         )}
