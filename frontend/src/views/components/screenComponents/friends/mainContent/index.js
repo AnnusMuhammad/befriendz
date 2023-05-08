@@ -1,13 +1,10 @@
 import { Fragment } from "react";
 import FindFriends from "../findFriends";
-import FriendRequest from "views/components/shared/friendRequest";
+import FreindListItem from "views/components/shared/friendRequest";
 import FriendRequestSkeleton from "views/components/skeletons/friends/friendRequest";
-import MyFriends from "views/components/shared/myFriends";
-import SuggestionFriends from "views/components/shared/suggestionFriends";
 import Search from "views/components/shared/search";
 
-const MainContent = ({ isFetching, friendRequests, activeOPtion }) => {
-  console.log(friendRequests);
+const MainContent = ({ isFetching, friends, friendRequests, activeOPtion, onFriendStatusChange }) => {
   const right = () => (
     <>
       <FindFriends />
@@ -29,27 +26,43 @@ const MainContent = ({ isFetching, friendRequests, activeOPtion }) => {
                   <div className="relative isolate gap-6 bg-white rounded-2xl p-[1rem]">
                     <div>
                       <h1 className="text-[#515165] text-[24px] font-openSans_bold">
-                        {activeOPtion?.title}
+                         {activeOPtion === "suggestions"  && 'Suggested For You'}
+                            {activeOPtion === "friends" && 'My Friends'}
+                            {activeOPtion === "request" && 'Friend Requests'}
                       </h1>
                     </div>
                     <div>
                       <ul className="my-[15px] divide-y divide-[#E6F4F6]">
                         {!isFetching ? (
                           <>
-                            {activeOPtion?.option === "suggestions" ? (
+                            {/* {activeOPtion === "suggestions" ? (
                               <SuggestionFriends />
+                            ) : null} */}
+                            {activeOPtion === "friends" ? (
+                              <>
+                                {friends &&
+                                friends.friends &&
+                                friends.friends.length > 0 ? (
+                                  friends.friends.map(
+                                    (item, index) => (                                      
+                                      <FreindListItem onFriendStatusChange={onFriendStatusChange} friendRequest={item} key={index} />
+                                    )
+                                  )
+                                ) : (
+                                  <p className="font-openSans_semiBold text-c_949494 text-[14px] m-0">
+                                    You dont have any friend.
+                                  </p>
+                                )}
+                              </>
                             ) : null}
-                            {activeOPtion?.option === "friends" ? (
-                              <MyFriends />
-                            ) : null}
-                            {activeOPtion?.option === "request" ? (
+                            {activeOPtion === "request" ? (
                               <>
                                 {friendRequests &&
                                 friendRequests.friendRequests &&
                                 friendRequests.friendRequests.length > 0 ? (
                                   friendRequests.friendRequests.map(
                                     (item, index) => (
-                                      <FriendRequest friendRequest={item} />
+                                      <FreindListItem onFriendStatusChange={onFriendStatusChange} friendRequest={item}  key={index} />
                                     )
                                   )
                                 ) : (
@@ -62,8 +75,8 @@ const MainContent = ({ isFetching, friendRequests, activeOPtion }) => {
                           </>
                         ) : (
                           <>
-                            {Array.from({ length: 10 }).map((user) => (
-                              <FriendRequestSkeleton />
+                            {Array.from({ length: 10 }).map((item, index) => (
+                              <FriendRequestSkeleton key={index}/>
                             ))}
                           </>
                         )}

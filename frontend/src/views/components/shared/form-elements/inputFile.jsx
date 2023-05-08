@@ -3,7 +3,14 @@ import { useState } from "react";
 import InputError from "./inputError";
 const { blueCamera, camera } = Images;
 const InputFile = (props) => {
-  const { register, error, labelClass, size = "", ...rest } = props;
+  const {
+    register,
+    error,
+    labelClass,
+    size = "",
+    imageRadius,
+    ...rest
+  } = props;
   const { onChange } = register;
 
   const clickHandler = (e) => {
@@ -30,25 +37,32 @@ const InputFile = (props) => {
       <label
         className={`flex flex-row justify-center items-center cursor-pointer w-36 h-36 ${
           labelClass == "blue"
-            ? "rounded-xl bg-[#E6F4F6]"
-            : "rounded-full bg-[#FFE1E1]"
+            ? `${imageRadius ? imageRadius : "rounded-xl"} bg-[#E6F4F6]`
+            : `${imageRadius ? imageRadius : "rounded-full"} bg-[#FFE1E1]`
         } ${size}`}
       >
         {image ? (
           <img
             alt="preview"
             className={` h-full w-full object-cover ${
-              labelClass == "blue" ? "rounded-xl" : "rounded-full"
+              labelClass == "blue"
+                ? `${imageRadius ? imageRadius : "rounded-xl"}`
+                : `${imageRadius ? imageRadius : "rounded-full"} `
             }`}
             src={image}
           />
         ) : (
-          <div className="flex flex-row items-center justify-center ">
+          <div className="flex flex-col gap-2 items-center justify-center ">
             <img
               alt="camera Image"
               className="w-10 h-10 "
               src={labelClass == "blue" ? blueCamera : camera}
             />
+            {labelClass != "blue" && (
+              <div className="text-c_FD6769 font-openSans_semiBold text-sm">
+                Profile Photo
+              </div>
+            )}
           </div>
         )}{" "}
         <input type="file" {...rest} {...handler} className="hidden" />

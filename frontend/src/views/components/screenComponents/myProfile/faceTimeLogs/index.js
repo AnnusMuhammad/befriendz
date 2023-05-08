@@ -11,9 +11,9 @@ const FaceTimeLogs = () => {
   };
   return (
     <section>
-      <div className="rounded-2xl bg-white space-y-5  px-5 pt-5 pb-10">
+      <div className="rounded-2xl bg-white space-y-5  pt-5 pb-10">
         <div>
-          <div className="flex space-x-2 items-center">
+          <div className="flex space-x-2 items-center px-5 ">
             <span className="text-[#515165] font-openSans_bold text-[16px] leading-none">
               Facetime Logs
             </span>
@@ -31,7 +31,7 @@ const FaceTimeLogs = () => {
             </span>
           </div>
         </div>
-        <div>
+        <div className="px-5 ">
           <div>
             <div>
               <span className="text-[#949494] text-[14px] font-openSans_semiBold">

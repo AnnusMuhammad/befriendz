@@ -5,7 +5,7 @@ import FriendsService from './freinds.service.js'
 import { config } from "dotenv";
 config();
 
-const updateProfile = async (req, res, next) => {
+const updateUser = async (req, res, next) => {
   const { currentUser } = req;
   const data = UserUpdateProfileDto(req.body);
   const user = await userModel.findById(
@@ -35,40 +35,37 @@ const updateProfile = async (req, res, next) => {
     { new: true, populate: { path: "interests" } }
   );
   
-  return { data: { user: UserDto(updatedUser) } };
+  return { data: { user: UserDto(updatedUser), friendStatus: false } };
 };
 
 
-const getProfile = async (req, res, next) => {
-    const { currentUser } = req;
-    const username = req.params.username;
-    var user ;
-    let friendStatus = false;
-    if(username){
-      // Someone else profile
-      user = await userModel.findOne({ username: username }).populate('interests').exec();
-      // Check if is freind, or has friend request by current user
-      if(user){
-        req.user = user;
-        friendStatus = await FriendsService.getFriendStatus(req);
-      }
+const fetchUser = async (req, res, next) => {
+  const { currentUser } = req;
+  const username = req.params.username;
+  let friendStatus = false;
+  const query = username ? { username } : { _id: currentUser };
+  const user = await userModel.findOne(query).populate('interests').exec();
 
-    }
-    else    // My Profile
-    user = await userModel.findById(currentUser).populate('interests').exec();
+  // Check if is freind, or has friend request by current user
+  if(username && user){
+    req.user = user;
+    friendStatus = await FriendsService.getFriendStatus(req);
+    friendStatus = friendStatus?.data?.friendStatus;
+  }
 
-    if (!user) {
-        const error = new Error(`User not found`);
-        error.statusCode = 404;
-        throw error;
-    }
-    return { data: { user: UserDto(user), friendStatus } };
+  if (!user) {
+      const error = new Error(`User not found`);
+      error.statusCode = 404;
+      throw error;
+  }
+  
+  return { data: { user: UserDto(user), friendStatus } };
 }
 
 
 
 const UserService = {
-  updateProfile,
-  getProfile,
+  updateUser,
+  fetchUser,
 };
 export default UserService;

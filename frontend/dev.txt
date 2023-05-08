@@ -1,7 +1,5 @@
 ====================================Remainig
 Username and email exsist validation on - Register page
-Image Uploading on - Complete profile page
-
 
 ===================================Problems
 React Helmet - 

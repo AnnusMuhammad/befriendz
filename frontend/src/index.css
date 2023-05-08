@@ -13,7 +13,7 @@
 
 @font-face {
   font-family: "openSans-Regular";
-  src: url("./assets/fonts/OpenSans-Regular.ttf");
+  src: url("./assets/fonts/OpenSans-Regular.ttf");    font-weight: 400;
 }
 
 
@@ -81,8 +81,13 @@ code {
     monospace;
 }
 
+.ReactGridGallery_tile-viewport{
+  border-radius: 10px;
+}
 
-
+.creditCard{
+  aspect-ratio: 3.37 / 2.3;
+}
 .h1,
 h1 {
   font-family: "Open Sans";

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const AddPost = ({
   placeholder = "Let’s share what going on your mind...",
 }) => {
@@ -18,12 +20,16 @@ const AddPost = ({
         </div>
       </div>
       <div>
-        <button
-          type="button"
-          className="inline-flex justify-center items-center rounded-md bg-[#FD6769] text-[16px] font-openSans_bold text-white focus-visible:outline-none hover:brightness-110 min-w-[112px] min-h-[44px] space-x-2 "
-        >
-          <span className="text-[14px] font-openSans_semiBold text-white">Add Post</span>
-        </button>
+        <Link to="/add-post">
+          <button
+            type="button"
+            className="inline-flex justify-center items-center rounded-md bg-[#FD6769] text-[16px] font-openSans_bold text-white focus-visible:outline-none hover:brightness-110 min-w-[112px] min-h-[44px] space-x-2 "
+          >
+            <span className="text-[14px] font-openSans_semiBold text-white">
+              Add Post
+            </span>
+          </button>
+        </Link>
       </div>
     </div>
   );

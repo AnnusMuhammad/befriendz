@@ -15,10 +15,10 @@ const Post = ({ linkTo = null }) => {
       onClick={() => handleClick()}
       className="relative isolate flex flex-col gap-5 lg:flex-row bg-white rounded-2xl p-4 cursor-pointer"
     >
-      <div className="absolute top-6 right-4 cursor-pointer p-1">
+      <div className="absolute top-6 right-4 cursor-pointer p-1 z-10">
         <img src={likeIcon.default} />
       </div>
-      <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-[156px] lg:h-full lg:shrink-0 w-11/12">
+      <div className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-[156px] lg:h-full lg:shrink-0 w-12/12">
         <img
           src={
             "https://images.unsplash.com/photo-1496128858413-b36217c2ce36?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=3603&q=80"
@@ -47,7 +47,7 @@ const Post = ({ linkTo = null }) => {
             </span>
           ))}
         </div>
-        <div className="mt-3 flex justify-between items-start">
+        <div className="mt-3 flex flex-wrap justify-between items-start ">
           <div className="relative flex items-center gap-x-3">
             <img
               src={

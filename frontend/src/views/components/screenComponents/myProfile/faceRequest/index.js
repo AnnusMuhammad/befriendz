@@ -3,9 +3,9 @@ import React from "react";
 const FaceRequest = () => {
   return (
     <section>
-      <div className="rounded-2xl bg-white space-y-5  px-5 pt-5 pb-10">
+      <div className="rounded-2xl bg-white space-y-5   pt-5 pb-10">
         <div>
-          <div className="flex space-x-2 items-center">
+          <div className="flex space-x-2 items-center px-5">
             <span className="text-[#515165] font-openSans_bold text-[16px] leading-none">
               Facetime Request
             </span>
@@ -30,7 +30,7 @@ const FaceRequest = () => {
               </span>
             </div>
           </div>
-          <div className="space-y-3">
+          <div className="space-y-3 px-5">
             <div>
               <div>
                 <span className="text-[#949494] text-[14px] font-openSans_regular">
@@ -73,11 +73,11 @@ const FaceRequest = () => {
           </div>
 
           <div>
-            <div className="flex justify-between flex-wrap">
-              <button className="outline-none bg-[#FD6769] text-white text-[16px] font-openSans_semiBold flex justify-center items-center min-h-[36px] min-w-[147px] rounded-lg">
+            <div className="flex justify-between flex-wrap px-5 gap-2">
+              <button className="outline-none bg-[#FD6769] text-white text-[16px] font-openSans_semiBold flex justify-center items-center min-h-[36px] min-w-[130px] rounded-lg">
                 <span>Accept</span>
               </button>
-              <button className="outline-none bg-[#F5F5F5] text-[#515165] text-[16px] font-openSans_semiBold flex justify-center items-center min-h-[36px] min-w-[147px] rounded-lg">
+              <button className="outline-none bg-[#F5F5F5] text-[#515165] text-[16px] font-openSans_semiBold flex justify-center items-center min-h-[36px] min-w-[130px] rounded-lg">
                 <span>Decline</span>
               </button>
             </div>

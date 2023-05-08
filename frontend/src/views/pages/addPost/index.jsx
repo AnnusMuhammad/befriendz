@@ -90,7 +90,7 @@ const AddPost = () => {
   return (
     <section>
       <div
-        className={`bg-white rounded-2xl px-[40px] py-[30px] ${
+        className={`bg-white rounded-2xl px-[40px] py-[30px] flex flex-col gap-4 ${
           isPreview ? "hidden" : "block"
         }`}
       >
@@ -102,7 +102,9 @@ const AddPost = () => {
             onChange={handleTitleChange}
           />
         </div>
-        <div className="flex flex-row gap-3  items-center">
+        <div
+          className={`flex flex-row gap-3  items-center ${image ? "" : "pb-6"}`}
+        >
           <div className="relative w-fit my-3">
             <label
               title="Click to upload"

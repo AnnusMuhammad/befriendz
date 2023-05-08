@@ -17,27 +17,43 @@ const Profile = (props) => {
   const [is404, set404] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [profile, setProfile] = useState(false);
+  const [refetch, setRefetch] = useState(false);
   const username = useParams().username || null;
   const location = useLocation();
 
+
   useEffect(() => {
     async function fetchProfile() {
+          setIsFetching(() => true);
       await UserService.getProfile( props.auth.user.token, username).then(
         (response) => {
           setProfile(response.data.data);
-          setIsFetching(() => false);
         },
         (error) => {
           set404(true);
-          setIsFetching(() => false);
         }
-      );
-    }
+        );
+        setIsFetching(() => false);
+      }
     fetchProfile();
     return () => {
       setProfile(false);
     };
-  }, [location]);
+  }, [location, refetch]);
+
+
+  const updateFreindStatus = (freindStatus) => [
+    setProfile((prevState)=>{
+      return {
+        ...prevState,
+        friendStatus: freindStatus,
+      }
+    })
+  ]
+  const refetchProfile = () => {
+    setRefetch((prevState) => !prevState);
+  }
+  
 
   return (
     <>
@@ -48,21 +64,27 @@ const Profile = (props) => {
               <SideBar
                 user={profile?.user}
                 friendStatus={profile?.friendStatus}
+                totalFriends={profile?.totalFriends}
+                friends={profile?.friends}
                 isMyProfile={
                   profile?.user?.username === props.auth.user.username
                 }
+                onFriendStatusChange={updateFreindStatus}
                 setOpen={setIsEditProfileModalOpen}
                 setIsBecomeLifeCoachModalOpen={setIsBecomeLifeCoachModalOpen}
                 isFetching={isFetching}
               />
             }
-            mainContent={<MainContent />}
+            mainContent={<MainContent isMyProfile={
+                  profile?.user?.username === props.auth.user.username
+                }/>}
           />
           {profile?.user?.username === props.auth.user.username && (
             <>
               <EditProfileModal
                 open={isEditProfileModalOpen}
                 setOpen={setIsEditProfileModalOpen}
+                refetchProfile={refetchProfile}
               />
               <BecomeLifeCoachModal
                 open={isBecomeLifeCoachModalOpen}

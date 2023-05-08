@@ -34,12 +34,6 @@ const {
   settings,
 } = Images;
 
-const navigation = [
-  { name: "Home", link: "#", icon: HomeIcon, current: true },
-  { name: "Popular", link: "#", icon: FireIcon, current: false },
-  { name: "Communities", link: "#", icon: UserGroupIcon, current: false },
-  { name: "Trending", link: "#", icon: ArrowTrendingUpIcon, current: false },
-];
 const userNavigation = [
   { name: "Profile", link: "/profile", icon: userProfile },
   { name: "Settings", link: "/settings/payments", icon: settings },
@@ -58,8 +52,8 @@ const NavLinks = [
     selectedIcon: selectedHome.default,
   },
   {
-    label: "Global",
-    link: "/global",
+    label: "Groups & Webinars",
+    link: "/group-webinar-training",
     icon: global.default,
     selectedIcon: selectedGlobal.default,
   },
@@ -71,7 +65,7 @@ const NavLinks = [
   },
 
   {
-    label: "Coin",
+    label: "Buy",
     link: "/buy",
     icon: coin.default,
     selectedIcon: selectedCoin.default,
@@ -432,21 +426,25 @@ function Header(props) {
                   aria-label="Global"
                 >
                   <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
-                    {navigation.map((item, index) => (
+                    {NavLinks.map((item, index) => {
+                       const isSelected =
+                            pathname === item.link ||
+                            (pathname.includes(item.link) && item.link !== "/");
+                      return(
                       <Link
                         key={index}
                         to={item.link}
-                        aria-current={item.current ? "page" : undefined}
+                        aria-current={isSelected ? "page" : undefined}
                         className={classNames(
-                          item.current
+                          isSelected
                             ? "bg-gray-100 text-gray-900"
                             : "hover:bg-gray-50",
                           "block rounded-md py-2 px-3 text-base font-medium"
                         )}
                       >
-                        {item.name}
+                        {item.label}
                       </Link>
-                    ))}
+                    )})}
                   </div>
                   <div className="border-t border-gray-200 pt-4">
                     <div className="mx-auto flex max-w-3xl items-center px-4 sm:px-6">

@@ -82,7 +82,7 @@ export default function PageLayout({ sideBar, mainContent }) {
           </Transition.Root>
 
           {/* Static sidebar for desktop */}
-          <div className="hidden lg:fixed lg:inset-y-0 lg:top-16 lg:flex lg:w-64 bg-[#F5F5F5] px-3 py-6">
+          <div className="hidden lg:fixed lg:inset-y-0 lg:top-16 lg:flex lg:w-64 bg-[#F5F5F5] pl-6 pt-6">
             {/* Sidebar component, swap this element with another sidebar if you like */}
             <div className="flex min-h-0 flex-1 flex-col">
               <div className="flex flex-1 flex-col overflow-y-auto">

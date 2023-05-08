@@ -1,8 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Fragment, useRef } from "react";
-import PerfectScrollbar from "react-perfect-scrollbar";
-import "react-perfect-scrollbar/dist/css/styles.css";
 
 export default function Modal({
   open = false,
@@ -91,14 +89,9 @@ export default function Modal({
                     </Dialog.Title>
                   </div>
                 </div>
-                <PerfectScrollbar
-                  options={{ wheelPropagation: false }}
-                  className="scroll-area"
-                >
-                  <div className="max-h-[65vh]">
-                    <div className="px-3">{children}</div>
-                  </div>
-                </PerfectScrollbar>
+                <div className="max-h-[65vh] overflow-y-auto">
+                  <div className="px-3">{children}</div>
+                </div>
               </Dialog.Panel>
             </Transition.Child>
           </div>

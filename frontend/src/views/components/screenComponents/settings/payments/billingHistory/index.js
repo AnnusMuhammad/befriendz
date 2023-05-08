@@ -1,4 +1,5 @@
 import React from "react";
+import Pagination from "views/components/shared/pagination";
 import Status from "views/components/shared/status";
 import TableSearchAndFilter from "views/components/shared/tableSearch";
 
@@ -54,6 +55,7 @@ const BillingHistory = () => {
           </tbody>
         </table>
       </div>
+      <Pagination />
     </div>
   );
 };

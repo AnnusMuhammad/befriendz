@@ -10,21 +10,50 @@ const sendFriendRequest = async (req, res, next) => {
   }
 };
 
-// Fetch All Friends i.e Suggested, Friend Requests, My Friends
-const fetchAllFriendsList = async (req, res, next) => {
+const rejectFriendRequest = async (req, res, next) => {
   try {
-    let friendRequests = await FriendsService.fetchFriendRequests(req);
-    let response = {data: {friendRequests: friendRequests.data}};
-    response.message = `Friends Fetched`;
+    let response = await FriendsService.rejectFriendRequest(req);
+    response.message = `Friend Request Rejected`;
     createResponse(res, response);
   } catch (e) {
     createError(res, e, next);
   }
-};
+}
+const cancelFriendRequest = async (req, res, next) => {
+  try {
+    let response = await FriendsService.cancelFriendRequest(req);
+    response.message = `Friend Request Cancelled`;
+    createResponse(res, response);
+  } catch (e) {
+    createError(res, e, next);
+  }
+}
+const acceptFriendRequest = async (req, res, next) => {
+  try {
+    let response = await FriendsService.acceptFriendRequest(req);
+    response.message = `Friend Request Accepted`;
+    createResponse(res, response);
+  } catch (e) {
+    createError(res, e, next);
+  }
+}
+const unfriend = async (req, res, next) => {
+  try {
+    let response = await FriendsService.unfriend(req);
+    response.message = `User Unfriend Successfuly`;
+    createResponse(res, response);
+  } catch (e) {
+    createError(res, e, next);
+  }
+}
+
 
 const FriendsController = {
   sendFriendRequest,
-  fetchAllFriendsList
+  acceptFriendRequest,
+  rejectFriendRequest,
+  cancelFriendRequest,
+  unfriend
 };
 
 export default FriendsController;

@@ -14,7 +14,39 @@ const SetLocationModal = ({ open, setOpen }) => {
     >
       <div className="space-y-10">
         <EmptySpace height="10px" />
-
+        <div className="relative ">
+          <div>
+            <input
+              className="bg-[#F5F5F5] py-4 px-3 w-full rounded  placeholder:text-[#C5D0E6] placeholder:font-openSans_regular outline-none"
+              placeholder="Enter Your Location"
+            />
+          </div>
+          <div className="absolute right-3 top-4">
+            <span>
+              <svg
+                width="21"
+                height="21"
+                viewBox="0 0 21 21"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <circle
+                  cx="10"
+                  cy="9"
+                  r="8"
+                  stroke="#C5D0E6"
+                  stroke-width="2"
+                />
+                <path
+                  d="M15.5 15.5L19.5 19.5"
+                  stroke="#C5D0E6"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                />
+              </svg>
+            </span>
+          </div>
+        </div>
         <div className="flex justify-center w-full">
           <img src={locationIcon.default} />
         </div>

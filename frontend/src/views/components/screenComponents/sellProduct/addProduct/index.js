@@ -12,14 +12,14 @@ const AddProduct = () => {
   };
   return (
     <section>
-      <div className="bg-white rounded-2xl px-[40px] py-[30px]">
+      <div className="bg-white rounded-2xl px-[40px] py-[30px] flex flex-col gap-4">
         <div className="">
           <input
             className="bg-[#F5F5F5] px-[15px] py-[10px] rounded-md text-[#949494] text-[26px] font-openSans_bold w-full outline-none"
             placeholder="Name of the Product"
           />
         </div>
-        <div className="flex flex-row gap-3  items-center">
+        <div className="flex flex-row gap-3  items-center pb-6">
           <div className="relative w-fit my-3">
             <label
               title="Click to upload"

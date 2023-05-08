@@ -4,14 +4,21 @@ import FaceTimeAndPhoneCall from "../faceTimePhoneCall";
 import FaceRequest from "../faceRequest";
 import FaceTimeLogs from "../faceTimeLogs";
 import ProfileTabs from "../profileTabs";
+import { useParams } from "react-router-dom";
 
-const MainContent = () => {
+const MainContent = ({isMyProfile}) => {
   const [activeTab, setActiveTab] = useState("My Posts");
   const right = () => (
     <>
-      <FaceTimeAndPhoneCall />
-      <FaceRequest />
-      <FaceTimeLogs />
+      {isMyProfile ? (
+        <>
+          <FaceTimeAndPhoneCall />
+          <FaceRequest />
+          <FaceTimeLogs />
+        </>
+      ) : (
+        <></>
+      )}
     </>
   );
   return (

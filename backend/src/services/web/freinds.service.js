@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import userModel from "../../database/models/user.model.js";
 import friendRequestModel from "../../database/models/friendRequest.model.js";
 import { FRIEND_STATUS } from "../../utils/constants/user.js";
 import { APP_CONSTANT } from "../../utils/constants/app.js";
@@ -56,7 +57,7 @@ const fetchFriendRequests = async (req, res, next) => {
               from: 'users',
               localField: 'from',
               foreignField: '_id',
-              as: 'fromUser'
+              as: 'from'
             }
           },
           {
@@ -64,40 +65,40 @@ const fetchFriendRequests = async (req, res, next) => {
               from: 'users',
               localField: 'to',
               foreignField: '_id',
-              as: 'toUser'
+              as: 'to'
             }
           },
-          { $unwind: '$fromUser' },
-          { $unwind: '$toUser' },
+          { $unwind: '$from' },
+          { $unwind: '$to' },
           { $project: { 
-            'fromUser._id': 1,
-            'fromUser.username': 1,
-            'fromUser.first_name': 1,
-            'fromUser.last_name': 1,
-            'fromUser.type': 1,
-            'fromUser.business_name': 1,
-            'fromUser.business_type': 1,
-            'fromUser.email': 1,
-            'fromUser.profileImage': {
+            'from._id': 1,
+            'from.username': 1,
+            'from.first_name': 1,
+            'from.last_name': 1,
+            'from.type': 1,
+            'from.business_name': 1,
+            'from.business_type': 1,
+            'from.email': 1,
+            'from.profileImage': {
               $cond: {
-                if: { $eq: ['$fromUser.profileImage', null] },
+                if: { $eq: ['$from.profileImage', null] },
                 then: IMAGES.AVATAR,
-                else: { $concat: [FILE_URL.UPLOADS, '$fromUser.profileImage'] },
+                else: { $concat: [FILE_URL.UPLOADS, '$from.profileImage'] },
               }
             },
-            'toUser._id': 1,
-            'toUser.username': 1,
-            'toUser.first_name': 1,
-            'toUser.last_name': 1,
-            'toUser.type': 1,
-            'toUser.business_name': 1,
-            'toUser.business_type': 1,
-            'toUser.email': 1,
-            'toUser.profileImage': {
+            'to._id': 1,
+            'to.username': 1,
+            'to.first_name': 1,
+            'to.last_name': 1,
+            'to.type': 1,
+            'to.business_name': 1,
+            'to.business_type': 1,
+            'to.email': 1,
+            'to.profileImage': {
               $cond: {
-                if: { $eq: ['$toUser.profileImage', null] },
+                if: { $eq: ['$to.profileImage', null] },
                 then: IMAGES.AVATAR,
-                else: { $concat: [FILE_URL.UPLOADS, '$toUser.profileImage'] },
+                else: { $concat: [FILE_URL.UPLOADS, '$to.profileImage'] },
               }
             },
              status: 1, createdAt: 1 
@@ -110,26 +111,181 @@ const fetchFriendRequests = async (req, res, next) => {
   return { data: {friendRequests: result.data || [], totalRequests: result.total  || 0}  };
 }
 
+const fetchFriends = async (req, res, next) => {
+  const {currentUser} = req;
+  const user = req.params.user || currentUser;
+  const page = req.params.page || 1;
+  const status = req.params.status || FRIEND_STATUS.accepted
+  const [result] = await friendRequestModel.aggregate([
+    { $match: {  $or: [
+      {to: mongoose.Types.ObjectId(user)},
+      {from: mongoose.Types.ObjectId(user)}
+    ], status } },
+    { $sort: { createdAt: -1 } },
+    {
+      $facet: {
+        data: [
+          { $skip: (page - 1) * APP_CONSTANT.FRIEND_REQUESTS_LIMIT },
+          { $limit: APP_CONSTANT.FRIEND_REQUESTS_LIMIT },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'from',
+              foreignField: '_id',
+              as: 'from'
+            }
+          },
+          {
+            $lookup: {
+              from: 'users',
+              localField: 'to',
+              foreignField: '_id',
+              as: 'to'
+            }
+          },
+          { $unwind: '$from' },
+          { $unwind: '$to' },
+          { $project: { 
+            'from._id': 1,
+            'from.username': 1,
+            'from.first_name': 1,
+            'from.last_name': 1,
+            'from.type': 1,
+            'from.business_name': 1,
+            'from.business_type': 1,
+            'from.email': 1,
+            'from.profileImage': {
+              $cond: {
+                if: { $eq: ['$from.profileImage', null] },
+                then: IMAGES.AVATAR,
+                else: { $concat: [FILE_URL.UPLOADS, '$from.profileImage'] },
+              }
+            },
+            'to._id': 1,
+            'to.username': 1,
+            'to.first_name': 1,
+            'to.last_name': 1,
+            'to.type': 1,
+            'to.business_name': 1,
+            'to.business_type': 1,
+            'to.email': 1,
+            'to.profileImage': {
+              $cond: {
+                if: { $eq: ['$to.profileImage', null] },
+                then: IMAGES.AVATAR,
+                else: { $concat: [FILE_URL.UPLOADS, '$to.profileImage'] },
+              }
+            },
+             status: 1, createdAt: 1 
+          } }
+        ],
+        total: [{ $count: 'total' }]
+      }
+    }
+  ]);
+  return { data: {friends: result.data || [], totalFriends: result.total  || 0}  };
+}
+
 const getFriendStatus = async (req, res, next) => {
     const {currentUser, user} = req;
     let friendStatus = false;
-    friendStatus = await friendRequestModel.find({
+    friendStatus = await friendRequestModel.findOne({
         $or: [
             { from:  mongoose.Types.ObjectId(currentUser), to:  mongoose.Types.ObjectId(user._id) },
             { to:  mongoose.Types.ObjectId(currentUser), from:  mongoose.Types.ObjectId(user._id) }
         ]
     })
     .sort({ createdAt: -1 }).limit(1);     
-    if(friendStatus && friendStatus[0]){
-        friendStatus = friendStatus[0]; 
-    }
-    else friendStatus = {status: FRIEND_STATUS.not_friend};
-    return friendStatus;
+    if(!friendStatus) friendStatus = {status: FRIEND_STATUS.not_friend};
+    return {data: {friendStatus}};
+}
+
+const rejectFriendRequest = async (req, res, next) => {
+  const {currentUser} = req;
+  const {freindrequest} = req.params;
+  const friendRequest = await friendRequestModel.findOneAndUpdate({_id: freindrequest, to: currentUser, status: FRIEND_STATUS.pending},
+  {
+    status: FRIEND_STATUS.rejected,
+  }, { new: true });
+  
+  if(!friendRequest){
+      const error = new Error(`Request not found`);
+      error.statusCode = 400;
+      throw error;
+  }
+  return {data: {friendRequest}}
+}
+
+const cancelFriendRequest = async (req, res, next) => {
+  const {currentUser} = req;
+  const {freindrequest} = req.params;
+  const friendRequest = await friendRequestModel.findOneAndUpdate({_id: freindrequest, from: currentUser, status: FRIEND_STATUS.pending}, {
+    status: FRIEND_STATUS.cancelled,
+  }, { new: true });
+
+  if(!friendRequest){
+      const error = new Error(`Request not found`);
+      error.statusCode = 400;
+      throw error;
+  }
+
+  return {data: {friendRequest}}
+}
+
+const acceptFriendRequest = async (req, res, next) => {
+  const {currentUser} = req;
+  const {freindrequest} = req.params;
+  const friendRequest = await friendRequestModel.findOneAndUpdate({
+    _id: freindrequest,
+    status: FRIEND_STATUS.pending,
+    $or: [
+      { from: currentUser },
+      { to: currentUser }
+    ],
+  }, {
+    status: FRIEND_STATUS.accepted,
+  }, { new: true });
+
+  if(!friendRequest){
+      const error = new Error(`Request not found`);
+      error.statusCode = 400;
+      throw error;
+  }
+  return {data: {friendRequest}}
+}
+
+const unfriend = async (req, res, next) => {
+  const {currentUser} = req;
+  const user = req.params.user;
+
+  const friendRequest = await friendRequestModel.findOneAndUpdate({
+    status: FRIEND_STATUS.accepted,
+    $or: [
+      { from: currentUser, to: user },
+      { to: currentUser, from: user },
+    ],
+  }, {
+    status: FRIEND_STATUS.not_friend,
+  }, { new: true });
+
+  if(!friendRequest){
+      const error = new Error(`You are not friend`);
+      error.statusCode = 400;
+      throw error;
+  }
+
+
+  return {data: {friendRequest}}
 }
 
 const FriendsService = {
-  sendFriendRequest,
   getFriendStatus,
-  fetchFriendRequests
+  fetchFriendRequests,
+  fetchFriends,
+  rejectFriendRequest,
+  cancelFriendRequest,
+  acceptFriendRequest,
+  sendFriendRequest,
+  unfriend,
 };
 export default FriendsService;

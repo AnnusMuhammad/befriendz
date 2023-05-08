@@ -1,4 +1,5 @@
 import { Images } from "config/images";
+import CreditCardUI from "views/components/shared/creditCardUI";
 import EmptySpace from "views/components/shared/emptySpace";
 import Button from "views/components/shared/form-elements/button";
 
@@ -33,6 +34,9 @@ const CardInfo = () => {
               <img src={arrowRightIcon.default} />
             </span>
           </div>
+        </div>
+        <div>
+          <CreditCardUI />
         </div>
         <div className="space-y-3">
           <CardInfoItem label={"Card Name"} details={"Deborah Dada"} />

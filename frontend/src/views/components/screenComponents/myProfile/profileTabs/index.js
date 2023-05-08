@@ -1,14 +1,22 @@
 import React from "react";
+import { useParams } from "react-router-dom";
 
 const ProfileTabs = ({ activeTab, setActiveTab }) => {
+  const { username } = useParams();
   const handleClick = (item) => {
     setActiveTab(item);
   };
   return (
     <div className="relative isolate bg-white rounded-2xl p-4 space-y-5">
       <div className="flex flex-wrap space-x-10 items-center justify-between w-full">
-        {["My Posts", "Liked Posts", "Webinars", "Training"]?.map((item) => (
+        {[
+          "My Posts",
+          ...(!username ? ["Liked Posts"] : []),
+          "Webinars",
+          "Training",
+        ]?.map((item, index) => (
           <button
+            key={index}
             onClick={() => handleClick(item)}
             className={`${
               activeTab === item

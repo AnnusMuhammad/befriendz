@@ -29,7 +29,7 @@ const ManageAdForm = () => {
                 name="profileImage"
                 accept="image/*"
                 labelClass="blue"
-                size="w-full h-40 rounded-[0]"
+                size="w-full h-40 rounded-0"
                 imageRadius="rounded-0"
                 register={{
                   ...("profileImage",

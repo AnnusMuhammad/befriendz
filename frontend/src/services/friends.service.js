@@ -17,11 +17,51 @@ const sendFriendReuest = (token, user) => {
   );
 };
 
-// Fetch All Friends i.e Suggested, Friend Requests, My Friends
-const fetchAllFriendList = (token) => {
-  const url = `/all-friends-list`;
-  return axios.get(
+
+const cancelFriendRequest = (token, request_id) => {
+  const url = `/${request_id}/cancel`;
+  return axios.put(
    API_URL + url,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const rejectFriendRequest = (token, request_id) => {
+  const url = `/${request_id}/reject`;
+  return axios.put(
+   API_URL + url,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const acceptFriendRequest = (token, request_id) => {
+  const url = `/${request_id}/accept`;
+  return axios.put(
+   API_URL + url,
+    {},
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
+const unfriendUser = (token, user) => {
+  const url = `/${user}/unfriend`;
+  return axios.put(
+   API_URL + url,
+    {},
     {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -32,6 +72,9 @@ const fetchAllFriendList = (token) => {
 
 const FriendsService = { 
   sendFriendReuest,
-  fetchAllFriendList
+  rejectFriendRequest,
+  cancelFriendRequest,
+  acceptFriendRequest,
+  unfriendUser
  };
 export default FriendsService;

@@ -5,11 +5,11 @@ import { update_profile_validation } from "./validation/user.route.validation.js
 
 const UserRouter = express.Router();
 
-UserRouter.get("/all-friends-list", FriendsController.fetchAllFriendsList); // Fetch All Friends i.e Suggested, Friend Requests, My Friends
 UserRouter.put("/:user/send-friend-request", FriendsController.sendFriendRequest);
-
+UserRouter.put("/:user/unfriend", FriendsController.unfriend);
+UserRouter.put("/:freindrequest/cancel", FriendsController.cancelFriendRequest);
+UserRouter.put("/:freindrequest/reject", FriendsController.rejectFriendRequest);
+UserRouter.put("/:freindrequest/accept", FriendsController.acceptFriendRequest);
 UserRouter.post("/update-profile", update_profile_validation, UserController.updateProfile);
-UserRouter.get("/", UserController.getProfile);
-UserRouter.get("/:username", UserController.getProfile);
 
 export default UserRouter;

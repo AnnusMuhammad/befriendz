@@ -34,7 +34,7 @@ const FaceTime = () => {
         </div>
 
         <div>
-          <div className="flex justify-between flex-wrap">
+          <div className="flex justify-between flex-wrap gap-2">
             <button className="outline-none bg-[#0493A3] text-white text-[16px] font-openSans_semiBold flex justify-center items-center min-h-[36px] min-w-[147px] rounded-lg">
               <span>Renew Package</span>
             </button>

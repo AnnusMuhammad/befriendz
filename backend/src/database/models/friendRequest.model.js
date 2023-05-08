@@ -16,7 +16,7 @@ const friendRequestSchema = new Schema(
     },
     status: {
       type: String,
-      enum: [FRIEND_STATUS.pending, FRIEND_STATUS.accepted, FRIEND_STATUS.rejected, FRIEND_STATUS.cancelled],
+      enum: [FRIEND_STATUS.pending, FRIEND_STATUS.accepted, FRIEND_STATUS.rejected, FRIEND_STATUS.cancelled, FRIEND_STATUS.not_friend],
       default: FRIEND_STATUS.pending,
       require: true,
     }

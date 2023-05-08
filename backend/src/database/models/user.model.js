@@ -90,13 +90,7 @@ const userSchema = new Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "topics",
       },
-    ],
-    friends: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
-      },
-    ],
+    ]
   },
   { timestamps: true }
 );

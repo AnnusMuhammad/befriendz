@@ -6,8 +6,8 @@ const { arrowRightIcon } = Images;
 const FindFriends = () => {
   return (
     <section className="space-y-5">
-      <div className="rounded-2xl bg-white space-y-5  px-5 pt-5 pb-10">
-        <div>
+      <div className="rounded-2xl bg-white space-y-5 pt-5 pb-10">
+        <div className="px-5">
           <div className="flex space-x-2 items-center">
             <span className="text-[#515165] font-openSans_bold text-[16px] leading-none">
               Find Friends by
@@ -20,7 +20,7 @@ const FindFriends = () => {
         <div>
           <MapView />
         </div>
-        <div className="">
+        <div className="px-5">
           <form className="space-y-5">
             <div className="">
               <Input

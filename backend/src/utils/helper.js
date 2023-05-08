@@ -49,7 +49,6 @@ export const createResponse = (res, resp) => {
     error: false,
     message: resp.message,
     data: resp.data ? resp.data : null,
-    pagination: resp.pagination ? resp.pagination : null,
   });
 };
 

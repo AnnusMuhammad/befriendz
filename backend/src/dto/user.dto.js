@@ -24,7 +24,7 @@ const UserDto = (data) => {
   }
   return {
     ...typeSpecificFields,
-    id: data && data?._id ? data._id : null,
+    _id: data && data?._id ? data._id : null,
     username: data && data?.username ? data.username : null,
     email: data && data?.email ? data.email : null,
     phoneNumber: data && data?.phoneNumber ? data.phoneNumber : null,
@@ -35,7 +35,6 @@ const UserDto = (data) => {
     isVerified: data && data?.isVerified ? data.isVerified : null,
     type: data && data?.type ? data.type : null,
     interests: data && data?.interests ? data.interests : [],
-    friends: data && data?.friends ? data.friends : [],
     createdAt: data && data?.createdAt ? new Date(data.createdAt).toLocaleDateString(APP_CONSTANT.LOCALE_DATE_STRING, {day: 'numeric', month: 'short', year: 'numeric'}) : null,
   };
 };

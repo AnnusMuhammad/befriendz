@@ -5,10 +5,10 @@ import MeetNewPeople from "../meetNewPeople";
 import WantToBeFriends from "../wantToBeFriends";
 import AddPost from "../addPost";
 
-const MainContent = () => {
+const MainContent = ({data, isFetching}) => {
   const rightSide = () => (
     <>
-      <WantToBeFriends />
+      {data?.totalRequests?.[0]?.total > 0 && <WantToBeFriends friendRequests={data?.friendRequests} />}
       <PlaceAd />
       <MeetNewPeople />
       <PlaceAd />
@@ -20,7 +20,9 @@ const MainContent = () => {
         <div className="col-span-5">
           <div>
             <div className="xl:space-y-0 space-y-10 ">
-              <aside className="xl:hidden space-y-6">{rightSide()}</aside>
+              <aside className="xl:hidden space-y-6">
+                {!isFetching ? rightSide(): null}
+              </aside>
               <div className="space-y-5">
                 <div>
                   <AddPost />
@@ -34,7 +36,7 @@ const MainContent = () => {
           </div>
         </div>
         <aside className="hidden xl:block col-span-2 space-y-6">
-          {rightSide()}
+          {!isFetching ? rightSide(): null}
         </aside>
       </div>
     </Fragment>
