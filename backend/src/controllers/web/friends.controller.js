@@ -46,6 +46,24 @@ const unfriend = async (req, res, next) => {
     createError(res, e, next);
   }
 }
+const fetchMyFriends = async (req, res, next) => {
+  try {
+    let fetchFriends = await FriendsService.fetchFriends(req);
+    let response = {data: {friends: fetchFriends.data}, message: 'Friends Fetched'};
+    createResponse(res, response);
+  } catch (e) {
+    createError(res, e, next);
+  }
+}
+const fetchFriendRequests = async (req, res, next) => {
+  try {
+    let friendRequests = await FriendsService.fetchFriendRequests(req);
+    let response = {data: {friendRequests: friendRequests.data}, message: 'Friends Request Fetched'};
+    createResponse(res, response);
+  } catch (e) {
+    createError(res, e, next);
+  }
+}
 
 
 const FriendsController = {
@@ -53,7 +71,9 @@ const FriendsController = {
   acceptFriendRequest,
   rejectFriendRequest,
   cancelFriendRequest,
-  unfriend
+  unfriend,
+  fetchMyFriends,
+  fetchFriendRequests,
 };
 
 export default FriendsController;

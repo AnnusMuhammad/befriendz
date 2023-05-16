@@ -41,9 +41,9 @@ const owlArray = [
   },
 ];
 const SlideContainer = ({ item }) => (
-  <div className="text-center text-white px-20 pb-6 ">
+  <div className="text-center text-white md:px-20 pb-6 px-5">
     <div>
-      <span className="lg:text-[64px] md:text-[62px] sm:text-[60px] text-[58px] font-openSans_bold leading-tight">
+      <span className="lg:text-[64px] md:text-[62px] text-4xl font-openSans_bold leading-tight">
         {item?.title}
       </span>
     </div>
@@ -58,7 +58,7 @@ const SlideContainer = ({ item }) => (
 const Home = () => {
   return (
     <section
-      className={`min-h-screen bg-no-repeat bg-c_282828 bg-cover `}
+      className={`min-h-screen bg-no-repeat bg-c_282828 bg-cover flex flex-col justify-center`}
       style={{
         backgroundImage: `url('${homeBackgroundImage}')`,
       }}
@@ -69,10 +69,10 @@ const Home = () => {
       </Helmet>
       <div className="py-8">
         <div className="flex justify-center">
-          <img src={brandLogo.default} />
+          <img src={brandLogo.default} className=" w-40 md:w-64" />
         </div>
         <div className="flex flex-row items-center justify-center">
-          <div className="w-10/12">
+          <div className="md:w-10/12 w-11/12">
             <OwlCarousel
               className="owl-theme"
               loop
@@ -90,7 +90,7 @@ const Home = () => {
           </div>
         </div>
         <div className="mt-8">
-          <div className="flex flex-wrap justify-center gap-10 font-openSans_semiBold text-[16px]">
+          <div className="flex flex-wrap justify-center gap-10 font-openSans_semiBold text-[16px] px-5">
             <Link
               to="/create-account"
               className="bg-c_FD6769 text-white rounded-full min-h-[60px] w-96 flex justify-center items-center hover:brightness-110 hover:text-white"

@@ -1,27 +1,38 @@
+import { connect } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import Input from "views/components/shared/form-elements/input";
+import InputError from "views/components/shared/form-elements/inputError";
+import Button from "views/components/shared/form-elements/button";
+import { useForm, Controller } from "react-hook-form";
 import { Menu, Transition } from "@headlessui/react";
 import CustomEditor from "components/shared/editor";
+import useFormHandler from "shared/hooks/useFormHandler";
 import { Fragment, useCallback, useState } from "react";
-import { TagsInput } from "react-tag-input-component";
 import { Images } from "../../../config/images";
 import Post from "../viewPost/Post";
 import PreviewPost from "./PreviewPost";
 import PageLayout from "views/layouts/page";
 import ImageFormPreview from "views/components/shared/form-elements/imageFormPreview";
-import { useLocation } from "react-router-dom";
+import PostService from "services/post.service";
+import { toast } from "react-toastify";
+import { displayErrorsAction } from "redux/actions/commonActions";
+import TopicService from "services/topic.service";
+import { AsyncPaginate } from "react-select-async-paginate";
 
-const AddPost = () => {
-  const {
-    uploadImageIcon,
-    minimizeIcon,
-    global,
-    coin,
-    globe,
-    photography,
-    realState,
-    tech,
-    groupMusic,
-    crypto,
-  } = Images;
+const {
+  uploadImageIcon,
+  minimizeIcon,
+  global,
+  coin,
+  globe,
+  photography,
+  realState,
+  tech,
+  groupMusic,
+  crypto,
+} = Images;
+const AddPost = (props) => {
   const groupNames = [
     { name: "Everyone", icon: globe },
     { name: "Photography", icon: photography },
@@ -33,16 +44,28 @@ const AddPost = () => {
 
   const location = useLocation();
   const stateTitle = location?.state?.title;
+  const [loading, setLoading] = useState(false);
 
   const [image, setImage] = useState(null);
   const [content, setContent] = useState(null);
   const [title, setTitle] = useState(stateTitle || null);
   const [imageName, setImageName] = useState(null);
-  const [selectedTags, setSelectedTags] = useState(null);
   const [isPreview, setIsPreview] = useState(false);
   const [groupName, setGroupName] = useState(null);
-  console.log("file: index.jsx:37  AddPost  groupName:", groupName);
   const [groupFilterText, setGroupFilterText] = useState("");
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const {
+    register,
+    handleSubmit,
+    clearErrors,
+    control,
+    formState: { errors },
+  } = useForm({
+    defaultValues: title ? { title } : {},
+  });
+  const navigate = useNavigate();
+  const { handleChange, resetFormErrors } = useFormHandler(clearErrors);
 
   const handleFileSelected = (event) => {
     if (event.target.files && event.target.files[0]) {
@@ -52,6 +75,7 @@ const AddPost = () => {
       setImage(null);
       setImageName(null);
     }
+    handleChange(event);
   };
   const handleTitleChange = (event) => {
     if (event.target.value.length > 0) {
@@ -59,18 +83,16 @@ const AddPost = () => {
     } else {
       setTitle(null);
     }
+    handleChange(event);
   };
 
   const handleGroupFilterText = (event) => {
     if (event.target.value.length > 0) {
-      console.log(
-        "file: index.jsx:59  handleGroupFilterText  event.target.value:",
-        event.target.value
-      );
       setGroupFilterText(event.target.value);
     } else {
       setGroupFilterText("");
     }
+    handleChange(event);
   };
 
   const handlePreviewToggle = () => {
@@ -80,6 +102,14 @@ const AddPost = () => {
 
   const handleGroupChange = (event) => {
     setGroupName(event.target.innerText);
+  };
+
+  const handleOptionChange = (newValue) => {
+    if (newValue.length <= 5) {
+      setSelectedTags(newValue);
+    } else {
+      toast.error("You can only select upto 5 tags");
+    }
   };
 
   const filterGroup = useCallback(() => {
@@ -92,19 +122,67 @@ const AddPost = () => {
       return groupNames;
     }
   }, [groupFilterText]);
+
+  const submitHandler = async (data) => {
+    resetFormErrors();
+    if (content?.length > 0) {
+      setLoading(true);
+      console.log(content);
+      const formData = new FormData();
+      formData.append("content", content);
+      formData.append(
+        "tags",
+        selectedTags.map((option) => option.value)
+      );
+      formData.append("title", title);
+      if (data.coverImage?.[0])
+        formData.append("coverImage", data.coverImage?.[0]);
+      await PostService.addPost(props.token, formData)
+        .then((response) => {
+          navigate(`/${response.data?.data?.post?._id}`);
+        })
+        .catch((error) => {
+          props.displayErrors(error);
+        });
+      setLoading(false);
+    } else toast.error("Content is required");
+  };
+  async function loadOptions(search, loadedOptions) {
+    const response = await TopicService.options(props.token, search);
+
+    return {
+      options: response.data.data.options.results,
+      hasMore: false,
+    };
+  }
   return (
     <section>
-      <div
+      <form
+        onSubmit={handleSubmit(submitHandler)}
         className={`bg-white rounded-2xl px-[40px] py-[30px] flex flex-col gap-4 ${
           isPreview ? "hidden" : "block"
         }`}
       >
         <div className="">
-          <input
+          <Input
             className="bg-[#F5F5F5] px-[15px] py-[10px] rounded-md text-[#949494] text-[26px] font-openSans_bold w-full outline-none"
             placeholder="Give Your Post A Title"
-            value={title}
-            onChange={handleTitleChange}
+            name="title"
+            register={{
+              ...register("title", {
+                onChange: handleTitleChange,
+                required: "This field is required",
+                minLength: {
+                  value: 3,
+                  message: "Title should be at least 3 characters long",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Title should be less then 20 characters",
+                },
+              }),
+            }}
+            error={errors.title?.message || props.common.errors?.title}
           />
         </div>
         <div
@@ -129,12 +207,16 @@ const AddPost = () => {
                 </span>
               </div>
             </label>
-            <input
+            <Input
               hidden="true"
               type="file"
-              onChange={handleFileSelected}
               name="uploadPostCoverImage"
               id="uploadPostCoverImage"
+              register={{
+                ...register("coverImage", {
+                  onChange: handleFileSelected,
+                }),
+              }}
             />
           </div>
           <Menu
@@ -159,7 +241,7 @@ const AddPost = () => {
             >
               <Menu.Items className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="flex flex-row gap-2 items-center justify-between mx-4 my-2 bg-[#EDEDED] rounded">
-                  <input
+                  <Input
                     type="text"
                     onChange={handleGroupFilterText}
                     placeholder="Search Group"
@@ -230,7 +312,7 @@ const AddPost = () => {
             <div className="pb-5 pt-3">
               <img
                 src={image}
-                alt="preview post cover image"
+                alt="preview post cover"
                 className="w-full h-[340px] object-cover rounded-lg"
               />
             </div>
@@ -242,31 +324,50 @@ const AddPost = () => {
             setValue={setContent}
             placeholder="Write all the informations you want people to know.... "
           />
+          <InputError
+            error={errors.content?.message || props.common.errors?.content}
+          />
         </div>
         <div className="w-full mt-[15px] flex flex-col gap-2">
           <label className="text-[#2A2A2A] text-[16px] font-openSans_regular">
             Add or change tags (up to 5) so readers know what your story is
             about
           </label>
-          <TagsInput
-            value={selectedTags}
-            onChange={setSelectedTags}
+          <Controller
             name="tags"
-            placeHolder=""
+            control={control}
+            rules={{ required: "Please select at least one option" }}
+            render={({ field }) => (
+              <AsyncPaginate
+                {...field}
+                onChange={(e) => {
+                  field.onChange(e);
+                  handleOptionChange(e);
+                }}
+                loadOptions={loadOptions}
+                isMulti
+                value={selectedTags}
+              />
+            )}
+          />
+          <InputError
+            error={errors.tags?.message || props.common.errors?.tags}
           />
         </div>
         <div className="flex w-full items-center mt-[15px] flex-row gap-8 flex-wrap">
-          <button
-            type="button"
+          <Button
+            disabled={loading}
+            isLoading={loading}
+            type="submit"
             className="inline-flex justify-center items-center rounded-md bg-c_0493A3 py-[8px] px-[40px] text-[16px] font-openSans_bold text-white focus-visible:outline-none hover:brightness-110 min-h-[44px] space-x-2"
           >
             <span>Upload Post</span>
-          </button>
+          </Button>
           <div onClick={handlePreviewToggle} className="cursor-pointer">
             <PreviewPost />
           </div>
         </div>
-      </div>
+      </form>
 
       <div className={`bg-white rounded-2xl ${isPreview ? "" : "hidden"}`}>
         <div className="p-10 flex flex-row flex-wrap gap-4 items-center">
@@ -306,20 +407,33 @@ const Right = () => <aside className="hidden xl:col-span-3 xl:block"></aside>;
 const Left = () => (
   <div className="hidden lg:col-span-3 lg:block xl:col-span-2 "></div>
 );
-const Center = () => (
+const Center = (props) => (
   <div className="mx-auto xl:grid xl:grid-cols-7 px-3 lg:px-4 lg:gap-8">
     <main className="lg:col-span-5 xl:col-span-5">
       <div className="space-y-5">
-        <AddPost />
+        <AddPost {...props} />
       </div>
     </main>
     <Right />
   </div>
 );
-export default function SellProduct() {
+function AddPostPage(props) {
   return (
     <>
-      <PageLayout mainContent={<Center />} sideBar={<Left />} />
+      <PageLayout
+        mainContent={<Center {...props} />}
+        sideBar={<Left />}
+        containsSideBar={false}
+      />
     </>
   );
 }
+const mapStateToProps = (state) => ({
+  common: state.common,
+  token: state.auth.user.token,
+});
+const mapDispatchToProps = (dispatch) => ({
+  displayErrors: (data) => dispatch(displayErrorsAction(data)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPostPage);

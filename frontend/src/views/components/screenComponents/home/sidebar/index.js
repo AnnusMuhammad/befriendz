@@ -2,13 +2,17 @@ import FilterFeed from "../filterFeed";
 import GoPremium from "../goPremium";
 import PinnedGroups from "../pinnedGroups";
 import WebinarsAndTraining from "../webinarsAndTraining";
-const SideBar = () => {
+const SideBar = ({fetching}) => {
   return (
     <div className="space-y-5">
-      <GoPremium />
-      <FilterFeed />
-      <WebinarsAndTraining />
-      <PinnedGroups />
+      {!fetching && 
+        <>
+          <GoPremium />
+          <FilterFeed />
+          <WebinarsAndTraining />
+          <PinnedGroups />
+        </>
+      }
     </div>
   );
 };

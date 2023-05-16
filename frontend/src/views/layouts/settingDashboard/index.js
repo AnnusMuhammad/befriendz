@@ -84,7 +84,10 @@ export default function SettingDashBoard({ nav }) {
 
           <div className="hidden lg:fixed lg:inset-y-0 lg:top-16 lg:flex lg:w-64 bg-[#F5F5F5] pl-6 pt-1">
             {/* Sidebar component, swap this element with another sidebar if you like */}
-            <div className="flex min-h-0 flex-1 flex-col">
+            <div
+              className="flex min-h-0 flex-1 flex-col"
+              style={{ width: "-webkit-fill-available" }}
+            >
               <div className="flex flex-1 flex-col overflow-y-auto">{nav}</div>
             </div>
           </div>

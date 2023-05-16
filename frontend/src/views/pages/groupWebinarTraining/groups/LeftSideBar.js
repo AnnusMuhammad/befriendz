@@ -53,9 +53,9 @@ const LeftSideBar = () => {
   const { newIcon, starIcon, fastestGrowingIcon, doubleArrowRightBlueIcon } =
     Images;
   return (
-    <div className="hidden lg:col-span-3 lg:block xl:col-span-2 ">
+    <div className=" lg:col-span-3 lg:block xl:col-span-2 ">
       <nav aria-label="Sidebar" className="sticky top-4 space-y-4">
-        <div className="hidden lg:col-span-3 lg:block xl:col-span-2 ">
+        <div className=" lg:col-span-3 lg:block xl:col-span-2 ">
           <nav aria-label="Sidebar" className="sticky top-4 space-y-4">
             <section>
               <div className="rounded-2xl bg-white flex items-center flex-col gap-4 space-y-3 py-3 px-2">

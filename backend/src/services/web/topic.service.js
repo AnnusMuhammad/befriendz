@@ -9,8 +9,22 @@ const findAllByIds = async (ids) => {
   const resp = await TopicModel.find({ _id: { $in: validIds } });
   return validIds;
 };
+const fetchAsOptions = async (req) => {
+  const search = req.query.search;
+  const query = search ? {
+     name: { $regex: new RegExp(search, "i") }
+  } : {}
+  const resp = await TopicModel.find(query).sort({ _id: -1 });
+  const data = { results: resp.map((item, index) => ({
+      value: item._id,
+      label: item.name
+    }))
+  };
+  return { data: { options: data } };
+};
 const TopicService = {
   findAll,
   findAllByIds,
+  fetchAsOptions
 };
 export default TopicService;

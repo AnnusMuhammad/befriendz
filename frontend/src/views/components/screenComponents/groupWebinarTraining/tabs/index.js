@@ -6,7 +6,7 @@ const PageTabs = ({ activeTab, setActiveTab }) => {
   };
   return (
     <div className="relative isolate bg-white rounded-2xl p-4 space-y-5">
-      <div className="flex flex-wrap space-x-10 items-center w-full">
+      <div className="flex flex-wrap items-center md:space-x-10 w-full justify-between md:justify-start">
         {["Groups", "Webinars", "Trainings"]?.map((item) => (
           <button
             onClick={() => handleClick(item)}

@@ -34,7 +34,7 @@ const EditProfileModal = (props) => {
         (error) => {
           props.displayError(error);
         }
-      );
+      ).catch(()=>{});
       setIsFetching(() => false);
     }
     fetchTopics();

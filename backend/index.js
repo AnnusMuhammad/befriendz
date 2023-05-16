@@ -32,7 +32,7 @@ app.get('/get-file/:folder/:file', (req, res) => {
 
   fs.access(filePath, fs.constants.F_OK, (err) => {
     if (err) {      
-      let defaultImage = path.join(process.cwd(), 'src', 'assets', 'images', 'Image_not_available.png');
+      let defaultImage = path.join(process.cwd(), 'src', 'assets', 'images', 'Image_not_available.jpg');
       res.sendFile(defaultImage);
     } else {
       res.sendFile(filePath);

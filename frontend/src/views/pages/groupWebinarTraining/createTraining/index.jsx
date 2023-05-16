@@ -248,7 +248,11 @@ const Center = () => (
 export default function CreateTrainingPage() {
   return (
     <>
-      <PageLayout mainContent={<Center />} sideBar={<Left />} />
+      <PageLayout
+        mainContent={<Center />}
+        sideBar={<Left />}
+        containsSideBar={false}
+      />
     </>
   );
 }

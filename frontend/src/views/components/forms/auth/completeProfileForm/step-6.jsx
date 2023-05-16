@@ -17,16 +17,18 @@ const Step6 = (props) => {
   useEffect(() => {
     async function fetchTopics() {
       setIsFetching(() => true);
-      await TopicService.listAll(props.user.token).then(
-        (response) => {
-          setTopics(response.data.data.topics);
-          setIsFetching(() => false);
-        },
-        (error) => {
-          props.displayError(error);
-          setIsFetching(() => false);
-        }
-      );
+      await TopicService.listAll(props.user.token)
+        .then(
+          (response) => {
+            setTopics(response.data.data.topics);
+            setIsFetching(() => false);
+          },
+          (error) => {
+            props.displayError(error);
+            setIsFetching(() => false);
+          }
+        )
+        .catch(() => {});
     }
     if (currentStep === 6 && !topics) fetchTopics();
     return () => {

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import React from "react";
 import Communation from "./communication";
 
-const { starBadeIcon } = Images;
+const { starBadeIcon, profileCover } = Images;
 const communicationItems = [
   {
     image: (
@@ -139,6 +139,7 @@ const SideBarContent = ({
             className="border-2 border-[#FD6769] h-[30px] object-cover rounded-full w-[30px]"
             src={friend.profileImage}
             alt={friend.username}
+            title={friend.username}
           />
         </Link>
       );
@@ -149,7 +150,9 @@ const SideBarContent = ({
     <>
       {/* profile cover & image */}
       <div className="relative min-h-[190px]">
-        <div className="h-[100px] bg-cover rounded-t-2xl bg-[#FD6769] bg-[url('https://musicindustryhowtoimages.s3.amazonaws.com/wp-content/uploads/2018/04/11123809/The-best-online-guitar-lessons-for-beginners-compared.jpg')] "></div>
+        <div className="h-[100px] bg-cover rounded-t-2xl bg-[#FD6769] flex justify-center items-center">
+          <img src={profileCover.default} />
+        </div>
         <div className="absolute top-16 w-full flex justify-center">
           <img
             className="w-[120px] h-[120px] bg-white rounded-full outline outline-white object-cover"
@@ -169,8 +172,8 @@ const SideBarContent = ({
                 : user?.business_name}
             </span>
           </div>
-          <div>
-            <span className="text-[#949494] text-[16px] font-openSans_regular">
+          <div className=" truncate text-clip  ">
+            <span className="text-[#949494] text-xs font-openSans_regular">
               {user?.type === USER_TYPE.PERSONAL
                 ? user?.occupation
                 : user?.business_type}

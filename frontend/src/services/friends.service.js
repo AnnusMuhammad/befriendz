@@ -70,11 +70,38 @@ const unfriendUser = (token, user) => {
   );
 };
 
+const fetchFriends = (token, page = 1) =>{
+  const url = `/my-friends?page=${page}`;
+  return axios.get(
+   API_URL + url,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+const fetchFriendRequests = (token, page = 1) =>{
+  const url = `/friend-requests?page=${page}`;
+  return axios.get(
+   API_URL + url,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+}
+
+
 const FriendsService = { 
   sendFriendReuest,
   rejectFriendRequest,
   cancelFriendRequest,
   acceptFriendRequest,
-  unfriendUser
+  unfriendUser,
+  fetchFriends,
+  fetchFriendRequests
  };
 export default FriendsService;

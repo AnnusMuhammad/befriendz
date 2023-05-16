@@ -1,5 +1,11 @@
 ====================================Remainig
 Username and email exsist validation on - Register page
+All Fields on update profile
+Suggested fRIENDS
+Wall of fame
+Infinite Lazyloading on posts
+Relevent posts
+Fetch topics lazily
 
 ===================================Problems
 React Helmet - 

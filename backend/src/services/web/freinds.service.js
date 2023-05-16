@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-import userModel from "../../database/models/user.model.js";
-import friendRequestModel from "../../database/models/friendRequest.model.js";
+import FriendRequestModel from "../../database/models/friendRequest.model.js";
 import { FRIEND_STATUS } from "../../utils/constants/user.js";
 import { APP_CONSTANT } from "../../utils/constants/app.js";
 import { IMAGES } from "../../utils/constants/images.js";
@@ -11,7 +10,12 @@ config();
 const sendFriendRequest = async (req, res, next) => {
   const { currentUser } = req;
   const user = req.params.user;
-  const friendRequests = await friendRequestModel.find({
+  if(user === currentUser){
+    const error = new Error(`You cant send friend request to yourself`);
+    error.statusCode = 400;
+    throw error;
+  }
+  const friendRequests = await FriendRequestModel.find({
     $or: [
       { from:  mongoose.Types.ObjectId(currentUser), to:  mongoose.Types.ObjectId(user) },
       { to:  mongoose.Types.ObjectId(currentUser), from:  mongoose.Types.ObjectId(user) }
@@ -29,7 +33,7 @@ const sendFriendRequest = async (req, res, next) => {
       throw error;
     }
   }
-  const requestDetails = await friendRequestModel.create(
+  const requestDetails = await FriendRequestModel.create(
     {
       from: currentUser,
       to: user,
@@ -42,16 +46,17 @@ const sendFriendRequest = async (req, res, next) => {
 
 const fetchFriendRequests = async (req, res, next) => {
   const {currentUser} = req;
-  const page = req.params.page || 1;
+  const page = req.query.page || 1;
+  const limit = req.query.limit || APP_CONSTANT.FRIEND_REQUESTS_LIMIT;
   const status = req.params.status || FRIEND_STATUS.pending
-  const [result] = await friendRequestModel.aggregate([
+  const [result] = await FriendRequestModel.aggregate([
     { $match: {  to: mongoose.Types.ObjectId(currentUser), status } },
     { $sort: { createdAt: -1 } },
     {
       $facet: {
         data: [
-          { $skip: (page - 1) * APP_CONSTANT.FRIEND_REQUESTS_LIMIT },
-          { $limit: APP_CONSTANT.FRIEND_REQUESTS_LIMIT },
+          { $skip: (page - 1) * limit },
+          { $limit: limit },
           {
             $lookup: {
               from: 'users',
@@ -111,12 +116,34 @@ const fetchFriendRequests = async (req, res, next) => {
   return { data: {friendRequests: result.data || [], totalRequests: result.total  || 0}  };
 }
 
+const fetchAllFriendsIDsAsArray = async (req, res, next) => {
+  const {currentUser} = req;
+  const status = req.params.status || FRIEND_STATUS.accepted
+  const acceptedFriendRequests = await FriendRequestModel.find({
+    status: status,
+    $or: [{ from: mongoose.Types.ObjectId(currentUser) }, { to: mongoose.Types.ObjectId(currentUser) }]
+  }).select('from to -_id').lean();
+
+  const friendIds = acceptedFriendRequests.reduce((ids, req) => {
+    if (req.from.toString() !== currentUser) {
+      ids.push( mongoose.Types.ObjectId(req.from));
+    }
+    if (req.to.toString() !== currentUser) {
+      ids.push(mongoose.Types.ObjectId(req.to));
+    }
+    return ids;
+  }, []);
+
+  return { data: {friendIds }  };
+}
+
 const fetchFriends = async (req, res, next) => {
   const {currentUser} = req;
   const user = req.params.user || currentUser;
-  const page = req.params.page || 1;
+  const page = req.query.page || 1;
+  const limit = req.query.limit || APP_CONSTANT.FRIEND_REQUESTS_LIMIT;
   const status = req.params.status || FRIEND_STATUS.accepted
-  const [result] = await friendRequestModel.aggregate([
+  const [result] = await FriendRequestModel.aggregate([
     { $match: {  $or: [
       {to: mongoose.Types.ObjectId(user)},
       {from: mongoose.Types.ObjectId(user)}
@@ -125,8 +152,8 @@ const fetchFriends = async (req, res, next) => {
     {
       $facet: {
         data: [
-          { $skip: (page - 1) * APP_CONSTANT.FRIEND_REQUESTS_LIMIT },
-          { $limit: APP_CONSTANT.FRIEND_REQUESTS_LIMIT },
+          { $skip: (page - 1) *  limit},
+          { $limit: limit },
           {
             $lookup: {
               from: 'users',
@@ -189,7 +216,7 @@ const fetchFriends = async (req, res, next) => {
 const getFriendStatus = async (req, res, next) => {
     const {currentUser, user} = req;
     let friendStatus = false;
-    friendStatus = await friendRequestModel.findOne({
+    friendStatus = await FriendRequestModel.findOne({
         $or: [
             { from:  mongoose.Types.ObjectId(currentUser), to:  mongoose.Types.ObjectId(user._id) },
             { to:  mongoose.Types.ObjectId(currentUser), from:  mongoose.Types.ObjectId(user._id) }
@@ -203,7 +230,7 @@ const getFriendStatus = async (req, res, next) => {
 const rejectFriendRequest = async (req, res, next) => {
   const {currentUser} = req;
   const {freindrequest} = req.params;
-  const friendRequest = await friendRequestModel.findOneAndUpdate({_id: freindrequest, to: currentUser, status: FRIEND_STATUS.pending},
+  const friendRequest = await FriendRequestModel.findOneAndUpdate({_id: freindrequest, to: currentUser, status: FRIEND_STATUS.pending},
   {
     status: FRIEND_STATUS.rejected,
   }, { new: true });
@@ -219,7 +246,7 @@ const rejectFriendRequest = async (req, res, next) => {
 const cancelFriendRequest = async (req, res, next) => {
   const {currentUser} = req;
   const {freindrequest} = req.params;
-  const friendRequest = await friendRequestModel.findOneAndUpdate({_id: freindrequest, from: currentUser, status: FRIEND_STATUS.pending}, {
+  const friendRequest = await FriendRequestModel.findOneAndUpdate({_id: freindrequest, from: currentUser, status: FRIEND_STATUS.pending}, {
     status: FRIEND_STATUS.cancelled,
   }, { new: true });
 
@@ -235,7 +262,7 @@ const cancelFriendRequest = async (req, res, next) => {
 const acceptFriendRequest = async (req, res, next) => {
   const {currentUser} = req;
   const {freindrequest} = req.params;
-  const friendRequest = await friendRequestModel.findOneAndUpdate({
+  const friendRequest = await FriendRequestModel.findOneAndUpdate({
     _id: freindrequest,
     status: FRIEND_STATUS.pending,
     $or: [
@@ -258,7 +285,7 @@ const unfriend = async (req, res, next) => {
   const {currentUser} = req;
   const user = req.params.user;
 
-  const friendRequest = await friendRequestModel.findOneAndUpdate({
+  const friendRequest = await FriendRequestModel.findOneAndUpdate({
     status: FRIEND_STATUS.accepted,
     $or: [
       { from: currentUser, to: user },
@@ -287,5 +314,6 @@ const FriendsService = {
   acceptFriendRequest,
   sendFriendRequest,
   unfriend,
+  fetchAllFriendsIDsAsArray
 };
 export default FriendsService;

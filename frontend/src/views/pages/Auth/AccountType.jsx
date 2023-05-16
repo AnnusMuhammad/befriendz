@@ -42,7 +42,7 @@ const AccountType = () => {
           <span className="text-black font-openSans_bold lg:text-[40px] md:text-[39px] sm:text-[38px] text-[37px]">
             Welcome 🤗
           </span>
-          <p className="lg:text-[14px] md:text-[13px] sm:text-[12px] text-[11px] text-c_949494 font-openSans_regular mb-0">
+          <p className="lg:text-[14px] md:text-[13px] text-md  text-c_949494 font-openSans_regular mb-0">
             What type of account do you want to create?
           </p>
         </div>
@@ -52,10 +52,10 @@ const AccountType = () => {
               <img src={item?.image} className="w-full" />
               <div className="absolute bottom-0 lg:p-5 md:p-4 sm:p-3 p-2">
                 <div className="text-white">
-                  <span className="font-openSans_bold lg:text-[20px] md:text-[18px] sm:text-[16px] text-[14px]">
+                  <span className="font-openSans_bold lg:text-[20px] md:text-[18px] text-md">
                     {item?.label}
                   </span>
-                  <p className="lg:text-[12px] md:text-[10px] sm:text-[8px] text-[6px] font-openSans_regular">
+                  <p className="lg:text-[12px] md:text-[10px] text-sm font-openSans_regular">
                     {item?.description}
                   </p>
                 </div>
@@ -71,7 +71,7 @@ const AccountType = () => {
           ))}
         </div>
         <div className="my-10 text-center">
-          <span className="text-c_2A2A2A font-openSans_regular lg:text-[14px] md:text-[13px] sm:text-[12px] text-[11px]">
+          <span className="text-c_2A2A2A font-openSans_regular lg:text-[14px] md:text-[13px] text-md">
             Already a member ?{" "}
             <Link
               to="/sign-in"

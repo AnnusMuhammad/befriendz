@@ -52,7 +52,9 @@ const ChatBox = () => {
     <>
       {isOpen && (
         <div className={` z-100 group flex justify-center`}>
-          <div className="flex h-[500px] w-[450px] antialiased text-gray-800">
+          <div
+            className={`flex h-[500px]  md:w-[450px] w-11/12 antialiased text-gray-800`}
+          >
             <div className="flex flex-row h-full w-full overflow-x-hidden">
               <div className="flex flex-col flex-auto h-full p-3">
                 <div className="flex flex-col flex-auto flex-shrink-0 rounded-2xl bg-white h-full p-4 shadow-sm border-2 border-[#f7f7f7]">

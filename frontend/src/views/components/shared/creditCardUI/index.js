@@ -3,7 +3,10 @@ import React from "react";
 const CreditCardUI = () => {
   return (
     <>
-      <div className="creditCard text-xs flex flex-col justify-between px-3 py-4 font-openSans_semiBold text-white bg-c_0493A3 rounded-xl overflow-hidden w-full max-w-[350px] h-min">
+      <div
+        className="creditCard text-xs flex flex-col justify-between px-3 py-4 font-openSans_semiBold text-white bg-c_0493A3 rounded-xl overflow-hidden w-full max-w-[350px] h-min text-center"
+        style={{ textAlign: "-webkit-center" }}
+      >
         <div className="mb-1  font-openSans_bold">Saved Card</div>
         <div className="flex flex-col gap-2">
           <div>

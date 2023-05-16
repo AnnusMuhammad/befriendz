@@ -10,9 +10,18 @@ const topicLists = async (req, res, next) => {
     createError(res, e, next);
   }
 };
+const topicsAsOptions = async (req, res, next) => {
+  try {
+    let response = await TopicService.fetchAsOptions(req);
+    response.message = `Options fetched successfully`;
+    createResponse(res, response);
+  } catch (e) {
+    createError(res, e, next);
+  }
+};
 
 const TopicController = {
-  topicLists,
+  topicLists,topicsAsOptions
 };
 
 export default TopicController;

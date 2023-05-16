@@ -23,7 +23,7 @@ const FrendRequestButton = ({ friendStatus, user = null, onFriendStatusChange = 
           setResponse(response.data.data.requestDetails)
         }, (error) => {
           displayError(error);
-        })
+        }).catch(()=>{})
         setIsLoading(false)
     }
 
@@ -45,7 +45,7 @@ const FrendRequestButton = ({ friendStatus, user = null, onFriendStatusChange = 
           }
       }, (error) => {
           displayError(error);
-      })
+      }).catch(()=>{})
       setIsLoading(false);
     }
 
@@ -59,7 +59,7 @@ const FrendRequestButton = ({ friendStatus, user = null, onFriendStatusChange = 
         }
       }, (error) => {
           displayError(error);
-      })
+      }).catch(()=>{})
       setIsLoading(false);
     }
 
@@ -73,7 +73,7 @@ const FrendRequestButton = ({ friendStatus, user = null, onFriendStatusChange = 
           }
       }, (error) => {
           displayError(error);
-      })
+      }).catch(()=>{})
       setIsLoading(false)
     }
 
@@ -81,7 +81,8 @@ const FrendRequestButton = ({ friendStatus, user = null, onFriendStatusChange = 
       e.preventDefault();
       setIsLoading(true);
 
-      const user_id = (currentUser._id !== friendStatus.from) ? friendStatus.from : friendStatus.to;
+      var user_id = (currentUser._id !== friendStatus.from) ? friendStatus.from : friendStatus.to;
+      if(user_id?._id) user_id = user_id._id
       FriendsService.unfriendUser(currentUser.token, user_id).then((response)=>{
           displayMessage(response.data.message)
           if(onFriendStatusChange){
@@ -89,7 +90,7 @@ const FrendRequestButton = ({ friendStatus, user = null, onFriendStatusChange = 
           }
       }, (error) => {
           displayError(error);
-      })
+      }).catch(()=>{})
       setIsLoading(false)
     }
 

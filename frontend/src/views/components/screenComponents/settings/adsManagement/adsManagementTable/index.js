@@ -5,15 +5,15 @@ import Status from "views/components/shared/status";
 const AdsManagementTable = () => {
   return (
     <div>
-      <div>
+      <div className=" max-w-[100vw] overflow-y-auto">
         <table className="min-w-full">
           <thead className="text-left text-[#515165] text-[12px] font-openSans_bold">
             <tr>
-              <th className="pb-5 pt-2">Name</th>
+              <th className="pb-5 px-4 pt-2">Name</th>
 
-              <th className="pb-5 pt-2">Budget</th>
-              <th className="pb-5 pt-2">Amount Spent</th>
-              <th className="pb-5 pt-2">Status</th>
+              <th className="pb-5 px-4 pt-2">Budget</th>
+              <th className="pb-5 px-4 pt-2">Amount Spent</th>
+              <th className="pb-5 px-4 pt-2">Status</th>
             </tr>
           </thead>
           <tbody className="text-left text-[#2A2A2A] text-[12px] font-openSans_regular divide-y divide-[#F5F5F5]">

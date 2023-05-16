@@ -237,7 +237,11 @@ const Center = () => (
 export default function CreateWebinarPage() {
   return (
     <>
-      <PageLayout mainContent={<Center />} sideBar={<Left />} />
+      <PageLayout
+        mainContent={<Center />}
+        sideBar={<Left />}
+        containsSideBar={false}
+      />
     </>
   );
 }

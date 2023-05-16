@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useNavigate, Route, Routes } from "react-router-dom";
 import { connect } from "react-redux";
 import { logoutAction } from "redux/actions/authActions";
-import { USER_STATUS } from "constants/user.constant";
 import Home from "../views/pages/Home/";
 import AccountType from "../views/pages/Auth/AccountType";
 import CreateAccount from "../views/pages/Auth/CreateAccount";
@@ -14,7 +13,8 @@ import RecoverPassword from "../views/pages/RecoverPassword/RecoverPassword";
 import CreatePasswordRecover from "../views/pages/RecoverPassword/CreatePassword";
 import VerifyEmailRecover from "../views/pages/RecoverPassword/VerifyEmail";
 import PasswordRecovered from "../views/pages/RecoverPassword/PasswordRecovered";
-import Dashboard from "../views/pages/dashboardHome";
+import Dashboard from "../views/pages/dashboardHome"; 
+import FriendsPosts from "../views/pages/friendsPosts"; 
 import ViewPost from "views/pages/viewPost";
 import ViewProduct from "views/pages/viewProduct";
 import BuyAndSell from "views/pages/buyAndSell";
@@ -36,7 +36,6 @@ import GroupDetails from "views/pages/groups/groupDetails";
 import Page404 from "views/pages/404";
 import GroupWebinarTraining from "views/pages/groupWebinarTraining";
 import CreateGroupsPage from "views/pages/groupWebinarTraining/createGroup";
-
 import CreateWebinarPage from "views/pages/groupWebinarTraining/createWebinar";
 import CreateTrainingPage from "views/pages/groupWebinarTraining/createTraining";
 import GroupWebinarTrainingLive from "views/pages/groupWebinarTrainingLive";
@@ -61,10 +60,16 @@ const AppRoutes = (props) => {
         <Route path="/profile" element={<Profile />} />        
         <Route path="/profile/:username" element={<Profile />} />
         <Route path="/friends" element={<Friends />} />        
-        <Route path="/friends/:type" element={<Friends />} />
-
+        <Route path="/friends/:type" element={<Friends />} />          
+        <Route
+          path="/wall-of-fame"
+          element={  <Dashboard />}
+        />
+        <Route
+          path="/friends/posts"
+          element={  <FriendsPosts />}
+        />
         <Route path="/view-product" element={<ViewProduct />} />
-        <Route path="/view-post" element={<ViewPost />} />
         <Route path="/buy" element={<BuyAndSell />} />
         <Route path="/add-post" element={<AddPost />} />
         <Route path="/sell" element={<AddProduct />} />
@@ -112,6 +117,8 @@ const AppRoutes = (props) => {
           path="/recover-password/password-recovered"
           element={<PasswordRecovered />}
         />
+              
+        <Route path="/:postid" element={<ViewPost />} />
         <Route path="*" element={<Page404 />} />
       </Routes>
     </>

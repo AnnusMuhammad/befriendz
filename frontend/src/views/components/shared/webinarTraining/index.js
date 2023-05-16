@@ -13,7 +13,7 @@ const WebinarTraining = ({ linkTo = null }) => {
       className="relative isolate bg-white rounded-2xl p-4 pb-10 space-y-5 cursor-pointer"
     >
       <div className="flex flex-wrap justify-between w-full">
-        <div className="flex flex-wrap space-x-3">
+        <div className="flex space-x-3">
           <div className="w-[72px] h-[72px]">
             <img
               src={

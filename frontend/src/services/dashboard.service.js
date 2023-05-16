@@ -28,9 +28,22 @@ const home = (token) => {
   );
 };
 
+const friendsPosts = (token) => {
+  const url = `friends/posts`;
+  return axios.get(
+   API_URL + url,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+};
+
 
 const DashboardService = { 
   friends,
-  home
+  home,
+  friendsPosts
  };
 export default DashboardService;

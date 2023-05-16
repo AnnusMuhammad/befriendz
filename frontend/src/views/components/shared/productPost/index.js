@@ -48,7 +48,7 @@ const ProductPost = ({ post, linkTo = null }) => {
             </span>
           </div>
         </div>
-        <div className="mt-3 flex flex-wrap justify-between items-center">
+        <div className="mt-3 flex flex-wrap justify-between items-center gap-2">
           <div className="relative flex items-center gap-x-3">
             <img
               src={

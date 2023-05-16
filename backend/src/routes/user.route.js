@@ -11,5 +11,8 @@ UserRouter.put("/:freindrequest/cancel", FriendsController.cancelFriendRequest);
 UserRouter.put("/:freindrequest/reject", FriendsController.rejectFriendRequest);
 UserRouter.put("/:freindrequest/accept", FriendsController.acceptFriendRequest);
 UserRouter.post("/update-profile", update_profile_validation, UserController.updateProfile);
+UserRouter.get('/my-friends', FriendsController.fetchMyFriends)
+UserRouter.get('/friend-requests', FriendsController.fetchFriendRequests)
+
 
 export default UserRouter;

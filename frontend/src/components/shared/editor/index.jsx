@@ -6,10 +6,8 @@ import "./editor.css";
 const CustomEditor = ({ value = "", setValue, placeholder }) => {
   const modules = {
     toolbar: [
-      [{ header: 1 }],
-
       ["bold", "italic", "underline", "strike"],
-      ["link", "image"],
+      ["link"],
       [{ list: "ordered" }, { list: "bullet" }],
       [
         { align: "" },
@@ -21,7 +19,6 @@ const CustomEditor = ({ value = "", setValue, placeholder }) => {
   };
 
   const formats = [
-    "header",
     "bold",
     "italic",
     "underline",

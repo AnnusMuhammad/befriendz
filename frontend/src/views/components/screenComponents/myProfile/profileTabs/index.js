@@ -8,7 +8,7 @@ const ProfileTabs = ({ activeTab, setActiveTab }) => {
   };
   return (
     <div className="relative isolate bg-white rounded-2xl p-4 space-y-5">
-      <div className="flex flex-wrap space-x-10 items-center justify-between w-full">
+      <div className="flex flex-wrap  items-center justify-between w-full">
         {[
           "My Posts",
           ...(!username ? ["Liked Posts"] : []),

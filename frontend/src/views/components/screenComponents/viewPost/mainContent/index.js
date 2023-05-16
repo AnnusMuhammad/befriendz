@@ -1,14 +1,20 @@
 import { Fragment } from "react";
 import Post from "../post";
-import Comments from "../comments";
 import AuthorProfile from "../authorProfile";
 import MorePost from "views/components/shared/morePost";
-
-const MainContent = () => {
+import PostDetailSkeleton from "views/components/skeletons/post/postDetail";
+import PostDetailSidebarSkeleton from "views/components/skeletons/post/postDetailSideBar";
+const MainContent = ({postDetails, relatedPosts, isFetching, setRefetch}) => {
   const rightSide = () => (
     <>
-      <AuthorProfile />
-      <MorePost postBy="Skubla Ven"/>
+      {!isFetching ? 
+      <>      
+      <AuthorProfile author={postDetails.author} setRefetch={setRefetch}/>
+      <MorePost relatedPosts={relatedPosts} author={postDetails.author}/>
+      
+      </>  :
+      <PostDetailSidebarSkeleton/>
+      }
     </>
   );
   return (
@@ -19,7 +25,9 @@ const MainContent = () => {
             <div className="xl:space-y-0 space-y-10 ">
               <aside className="xl:hidden space-y-6">{rightSide()}</aside>
               <div className="space-y-5">
-                <Post />
+                {!isFetching ?
+                <Post postDetails={postDetails}/>
+                  : <PostDetailSkeleton /> }
               </div>
             </div>
           </div>

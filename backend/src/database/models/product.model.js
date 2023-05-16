@@ -11,7 +11,7 @@ const productSchema = new Schema(
       type: String,
       default: null,
     },
-    media: {
+    coverImage: {
       type: String,
       require: true,
     },

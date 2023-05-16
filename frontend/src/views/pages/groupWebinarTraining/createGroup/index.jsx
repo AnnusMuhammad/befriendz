@@ -55,7 +55,7 @@ const CreateGroups = () => {
           onChange={handleTitleChange}
         />
       </div>
-      <div className="flex flex-row gap-3  items-center">
+      <div className="flex md:flex-row gap-3  md:items-center flex-col">
         <div className="relative w-fit my-3">
           <label
             title="Click to upload"
@@ -184,7 +184,11 @@ const Center = () => (
 export default function CreateGroupsPage() {
   return (
     <>
-      <PageLayout mainContent={<Center />} sideBar={<Left />} />
+      <PageLayout
+        mainContent={<Center />}
+        sideBar={<Left />}
+        containsSideBar={false}
+      />
     </>
   );
 }

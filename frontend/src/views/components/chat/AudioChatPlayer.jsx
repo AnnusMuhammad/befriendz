@@ -72,7 +72,7 @@ const AudioChatPlayer = (props) => {
             <img src={playIcon.default} className="h-8 w-8" />
           </button>
         </div>
-        <div className="w-[130px] h-10" ref={waveformRef} />
+        <div className="md:w-[130px] w-[80px] h-10" ref={waveformRef} />
         <div>2:12</div>
       </div>
     </>

@@ -61,12 +61,12 @@ export default function Modal({
                         >
                           <div>
                             <div>
-                              <span className="font-openSans_bold text-[#2A2A2A] lg:text-[40px] md:text-[39px] sm:text-[38px] text-[37px]">
+                              <span className="font-openSans_bold text-[#2A2A2A] lg:text-[40px] md:text-[39px]  text-2xl">
                                 {title}
                               </span>
                             </div>
                             <div>
-                              <span className="font-openSans_regular text-[#949494] lg:text-[14px] md:text-[13px] sm:text-[12px] text-[11px]">
+                              <span className="font-openSans_regular text-[#949494] lg:text-[14px] md:text-[13px]  text-xs">
                                 {subTitle}
                               </span>
                             </div>

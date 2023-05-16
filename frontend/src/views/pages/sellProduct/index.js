@@ -4,7 +4,11 @@ import PageLayout from "views/layouts/page";
 export default function SellProduct() {
   return (
     <>
-      <PageLayout sideBar={<></>} mainContent={<MainContent />} />
+      <PageLayout
+        sideBar={<></>}
+        containsSideBar={false}
+        mainContent={<MainContent />}
+      />
     </>
   );
 }

@@ -1,6 +1,7 @@
 import userModel from "../../database/models/user.model.js";
 import UserUpdateProfileDto from "../../dto/userUpdateProfile.dto.js";
 import UserDto from "../../dto/user.dto.js";
+import mongoose from "mongoose";
 import FriendsService from './freinds.service.js'
 import { config } from "dotenv";
 config();
@@ -38,7 +39,6 @@ const updateUser = async (req, res, next) => {
   return { data: { user: UserDto(updatedUser), friendStatus: false } };
 };
 
-
 const fetchUser = async (req, res, next) => {
   const { currentUser } = req;
   const username = req.params.username;
@@ -61,11 +61,22 @@ const fetchUser = async (req, res, next) => {
   
   return { data: { user: UserDto(user), friendStatus } };
 }
-
-
+const fetchUserInterestsIdsAsArray = async (req, res, next) => {
+  const { currentUser } = req;
+  const user = await userModel.findOne({_id: currentUser})
+  .select('interests');
+  if (!user) {
+    const error = new Error(`User not found`);
+    error.statusCode = 404;
+    throw error;
+  } 
+  const topicIds = user.interests.map((topic) => mongoose.Types.ObjectId(topic.toString()));
+  return { data: { topicIds, } };
+}
 
 const UserService = {
   updateUser,
   fetchUser,
+  fetchUserInterestsIdsAsArray
 };
 export default UserService;

@@ -5,18 +5,18 @@ import Status from "views/components/shared/status";
 const PurchaseTable = () => {
   return (
     <div>
-      <div>
+      <div className=" max-w-[100vw] overflow-y-auto">
         <table className="min-w-full">
-          <thead className="text-left text-[#515165] text-[12px] font-openSans_bold">
+          <thead className="text-center text-[#515165] text-[12px] font-openSans_bold">
             <tr>
-              <th className="pb-5 pt-2">Description</th>
-              <th className="pb-5 pt-2">Item</th>
-              <th className="pb-5 pt-2">Amount</th>
-              <th className="pb-5 pt-2">Date & Time</th>
-              <th className="pb-5 pt-2">Status</th>
+              <th className="pb-5 px-4 pt-2">Description</th>
+              <th className="pb-5 px-4 pt-2">Item</th>
+              <th className="pb-5 px-4 pt-2">Amount</th>
+              <th className="pb-5 px-4 pt-2">Date & Time</th>
+              <th className="pb-5 px-4 pt-2">Status</th>
             </tr>
           </thead>
-          <tbody className="text-left text-[#2A2A2A] text-[12px] font-openSans_regular divide-y divide-[#F5F5F5]">
+          <tbody className="text-center text-[#2A2A2A] text-[12px] font-openSans_regular divide-y divide-[#F5F5F5]">
             {Array.from({ length: 5 })?.map((item) => (
               <tr className="">
                 <td className="pt-5 pb-3">Buy</td>
@@ -36,15 +36,15 @@ const PurchaseTable = () => {
                     </div>
                   </div>
                 </td>
-                <td className="pt-5 pb-3">
+                <td className="pt-5 pb-3 ">
                   <Status label="Sucess" type="success" />
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <Pagination />
       </div>
+      <Pagination />
     </div>
   );
 };

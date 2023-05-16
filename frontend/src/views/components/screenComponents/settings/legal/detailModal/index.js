@@ -15,7 +15,7 @@ const LegalDetailModal = ({ open = {}, setOpen = () => {} }) => {
       title={heading}
       subTitle={subHeading}
     >
-      <p className="font-openSans_regular text-[#515165] text-[12px]">
+      <p className="font-openSans_regular text-[#515165] text-sm">
         {description}
       </p>
     </Modal>

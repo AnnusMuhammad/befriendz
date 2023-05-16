@@ -9,6 +9,21 @@ const listAll = (token = null) => {
   });
 };
 
-const TopicService = { listAll };
+const options = (token = null, search = false, loadedOptions = false) => {
+
+  const url = new URL(`${API_URL}/options?`);
+  const params = new URLSearchParams(url.search);
+  if(search)
+  params.set("search", search);
+  if(loadedOptions)
+  params.set("offset", loadedOptions.length);
+
+
+  return axios.get(url + params.toString(), {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+};
+
+const TopicService = { listAll, options };
 
 export default TopicService;

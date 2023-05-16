@@ -31,7 +31,7 @@ const Input = (props) => {
         />
         {type && type === "password" && (
           <img
-            className="absolute right-5 top-5 cursor-pointer object-contain"
+            className="absolute right-5 top-8 cursor-pointer object-contain"
             src={eyeIcon}
             alt="View Password"
             onClick={togglePasswordVisibility}

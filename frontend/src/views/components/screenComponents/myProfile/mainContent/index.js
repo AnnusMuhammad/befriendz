@@ -1,12 +1,13 @@
 import { Fragment, useState } from "react";
-import Post from "views/components/shared/post";
+import { USER_TYPE } from "constants/user.constant";
+import Post1 from "views/components/shared/post/post1";
+import Post2 from "views/components/shared/post/post2";
 import FaceTimeAndPhoneCall from "../faceTimePhoneCall";
 import FaceRequest from "../faceRequest";
 import FaceTimeLogs from "../faceTimeLogs";
 import ProfileTabs from "../profileTabs";
-import { useParams } from "react-router-dom";
-
-const MainContent = ({isMyProfile}) => {
+import PostItemSkeleton from "views/components/skeletons/post/postItem";
+const MainContent = ({isMyProfile, myPosts, isFetching}) => {
   const [activeTab, setActiveTab] = useState("My Posts");
   const right = () => (
     <>
@@ -36,10 +37,18 @@ const MainContent = ({isMyProfile}) => {
                       setActiveTab={setActiveTab}
                     />
                   </div>
-                  {Array?.from({ length: 4 })?.map((item, index) => (
-                    <Post key={index} />
+                  {!isFetching ?
+                  <>
+                    {myPosts.posts?.length > 0 ? 
+                   <>
+                   {myPosts.posts?.map((item, index) => (item.author.type === USER_TYPE.BUSINESS) ? <Post2 post={item} key={index}/> : <Post1 post={item} key={index}/> )}
+                   {myPosts.totalPosts?.[0]?.total > myPosts.posts.length ? <p className="text-center font-openSans_semiBold text-c_949494 text-[14px] m-0">Loading More items...</p> : null}
+                   </>
+                    : <p className="font-openSans_semiBold text-c_949494 text-[14px] m-0">No post found to show</p>}
+                  </>
+                  : Array.from({ length: 10 }).map((item, index) => (
+                    <PostItemSkeleton  key={index}/>
                   ))}
-                  {Post}
                 </div>
               </div>
             </div>

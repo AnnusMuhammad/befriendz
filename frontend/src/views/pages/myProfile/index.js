@@ -17,6 +17,7 @@ const Profile = (props) => {
   const [is404, set404] = useState(false);
   const [isFetching, setIsFetching] = useState(true);
   const [profile, setProfile] = useState(false);
+  const [myPosts, setMyPosts] = useState({posts: [], totalPosts: []});
   const [refetch, setRefetch] = useState(false);
   const username = useParams().username || null;
   const location = useLocation();
@@ -24,10 +25,13 @@ const Profile = (props) => {
 
   useEffect(() => {
     async function fetchProfile() {
-          setIsFetching(() => true);
+      setIsFetching(() => true);
       await UserService.getProfile( props.auth.user.token, username).then(
         (response) => {
           setProfile(response.data.data);
+          if(response?.data?.data?.posts?.length > 0){
+            setMyPosts({posts: response?.data?.data?.posts, totalPosts: response?.data?.data?.totalPosts})
+          }
         },
         (error) => {
           set404(true);
@@ -38,6 +42,7 @@ const Profile = (props) => {
     fetchProfile();
     return () => {
       setProfile(false);
+      setMyPosts({posts: [], totalPosts: []});
     };
   }, [location, refetch]);
 
@@ -77,7 +82,7 @@ const Profile = (props) => {
             }
             mainContent={<MainContent isMyProfile={
                   profile?.user?.username === props.auth.user.username
-                }/>}
+                } myPosts={myPosts}     isFetching={isFetching} />}
           />
           {profile?.user?.username === props.auth.user.username && (
             <>

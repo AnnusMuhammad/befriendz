@@ -11,11 +11,11 @@ const postSchema = new Schema(
       type: String,
       default: null,
     },
-    media: {
+    coverImage: {
       type: String,
-      require: true,
+      default: null,
     },
-    topics: [
+    tags: [
       {
         type: mongoose.Schema.Types.ObjectId,
         ref: "topics",

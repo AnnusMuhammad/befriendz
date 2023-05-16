@@ -89,10 +89,10 @@ const Comments = () => {
                     aria-hidden="true"
                   />
                 ) : null}
-                <div className="relative flex space-x-3">
-                  <div className="min-w-[50px]">
+                <div className="relative flex md:space-x-3">
+                  <div className="md:min-w-[50px] min-w-[30px]">
                     <img
-                      className="w-[45px] h-[45px] rounded-full"
+                      className="w-10 h-10 rounded-full"
                       src={
                         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0qKxeCcgV_gLesfo7kh33pLqn3nIEwMO_xG7Z2miK&s"
                       }

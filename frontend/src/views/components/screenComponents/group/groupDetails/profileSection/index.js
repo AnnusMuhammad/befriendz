@@ -16,13 +16,13 @@ const ProfileSection = () => {
           <div className="flex space-x-3 items-center">
             <div>
               <img
-                className="w-[70px] h-[70px] rounded-full"
+                className="w-14 rounded-full"
                 src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS0vId0JXtXVNijOf5Z3vppWV1DAoJPBhN6tw&usqp=CAU"
               />
             </div>
             <div>
               <div>
-                <span className="text-[#3F4354] text-[26px] font-openSans_regular leading-none">
+                <span className="text-[#3F4354] text-2xl font-openSans_regular leading-none">
                   Football Lovers
                 </span>
               </div>
@@ -35,7 +35,7 @@ const ProfileSection = () => {
             </div>
           </div>
           <div>
-            <div className="flex space-x-3">
+            <div className="flex gap-2 md:flex-row flex-col">
               <button className="bg-[#0493A3] text-white text-[12px] font-openSans_medium flex items-center justify-center space-x-2 h-[40px] w-[84px] rounded">
                 <div>
                   <img src={shareIcon.default} />

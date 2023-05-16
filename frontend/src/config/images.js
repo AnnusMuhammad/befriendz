@@ -108,4 +108,5 @@ export const Images = {
   dustbinIcon: require("../assets/images/dustbin.svg"),
   masterCardIcon: require("../assets/images/masterCard.svg"),
   searchIcon: require("../assets/images/serach.svg"),
+  profileCover: require("../assets/images/profilecover.svg"),
 };

@@ -94,7 +94,7 @@ const SignInForm = (props) => {
               to="/create-account"
               className="text-c_0493A3 hover:text-c_0493A3 font-openSans_bold text-[16px]"
             >
-              Do It Later
+              Create Account
             </Link>
           </span>
         </div>

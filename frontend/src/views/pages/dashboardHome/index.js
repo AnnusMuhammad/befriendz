@@ -16,14 +16,22 @@ const DashboardHome = (props) => {
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState(false);
   const [isSubscriptionModalOpen, setIsSubscriptionModalOpen] = useState(false);
   const [data, setData] = useState(false);
+  const [posts, setPosts] = useState({
+        totalPosts:[],
+        posts: []
+      });
   const [isFetching, setIsFetching] = useState(true);
 
   useEffect(()=>{
     async function fetchData (){
       setIsFetching(true);
      await DashboardService.home(props.auth.user.token).then((response)=>{
-      setData(response.data.data);
-     })
+      setData(response.data.data);      
+      setPosts({
+        totalPosts: response.data.data.totalPosts,
+        posts: response.data.data.posts
+      });
+     }).catch(()=>{})
      setIsFetching(false);
     }
     fetchData();
@@ -31,7 +39,7 @@ const DashboardHome = (props) => {
 
   return (
     <>
-      <PageLayout sideBar={<SideBar isFetching={isFetching}/>} mainContent={<MainContent data={data} isFetching={isFetching} />} />
+      <PageLayout sideBar={<SideBar isFetching={isFetching}  data={data}/>} mainContent={<MainContent posts={posts}  data={data} isFetching={isFetching} />} />
 
       {isLocationModalOpen && (
         <SetLocationModal

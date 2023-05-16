@@ -91,8 +91,8 @@ function Header(props) {
             {({ open }) => (
               <>
                 <div className="mx-auto px-4 sm:px-6 lg:px-8 ">
-                  <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12">
-                    <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2">
+                  <div className="relative flex justify-between lg:gap-8 xl:grid xl:grid-cols-12 sm:grid-cols-12 flex-wrap">
+                    <div className="flex md:absolute md:inset-y-0 md:left-0 lg:static xl:col-span-2 ">
                       <div className="flex flex-shrink-0 items-center">
                         <Link to="/">
                           <img
@@ -103,7 +103,7 @@ function Header(props) {
                         </Link>
                       </div>
                     </div>
-                    <div className="xl:col-span-2">
+                    <div className="xl:col-span-2 hidden lg:block">
                       <div className="flex flex-row gap-2 items-center h-full">
                         {NavLinks.map((item, index) => {
                           const isSelected =
@@ -127,9 +127,9 @@ function Header(props) {
                         })}
                       </div>
                     </div>
-                    <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-4">
-                      <div className="flex items-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0">
-                        <div className="w-full">
+                    <div className="min-w-0 flex-1 md:px-8 lg:px-0 xl:col-span-4 sm:col-span-12 ">
+                      <div className="flex items-center justify-center px-6 py-4 md:mx-auto md:max-w-3xl lg:mx-0 lg:max-w-none xl:px-0 ">
+                        <div className="w-full max-w-[400px]">
                           <label htmlFor="search" className="sr-only">
                             Search
                           </label>
@@ -143,7 +143,7 @@ function Header(props) {
                             <input
                               id="search"
                               name="search"
-                              className="block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6"
+                              className="outline-none block w-full rounded-md border-0 bg-white py-1.5 pl-10 pr-3 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-rose-500 sm:text-sm sm:leading-6"
                               placeholder="Search"
                               type="search"
                             />
@@ -189,46 +189,55 @@ function Header(props) {
                           leaveFrom="opacity-100 translate-y-0"
                           leaveTo="opacity-0 translate-y-1"
                         >
-                          <Popover.Panel className="min-w-[500px] absolute  z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-4">
-                            <div className="max-w-lg flex-auto overflow-hidden rounded-md bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
-                              <div className="p-6">
-                                <div className="m-4 text-lg font-bold text-[#515165]">
+                          <Popover.Panel className="min-w-[400px] absolute  z-10 mt-5 flex w-screen max-w-max -translate-x-1/2 px-2">
+                            <div className="max-w-lg flex-auto overflow-hidden rounded-2xl bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                              <div className="p-3">
+                                <div className="m-4 text-[16px] font-openSans_bold text-[#515165]">
                                   Messages
                                 </div>
-                                <div className="overflow-auto max-h-[60vh]">
+                                <div className="overflow-auto max-h-[402px]">
                                   {[1, 1, 1, 1, 1, 1, 1, 1].map(
                                     (item, index) => (
                                       <div
                                         key={index}
                                         className="flex flex-row pr-2 items-center justify-between"
                                       >
-                                        <div className="group relative flex gap-x-5 rounded-lg p-4 hover:bg-gray-50">
+                                        <div className="group relative flex gap-x-3 rounded-lg p-2 hover:bg-gray-50">
                                           <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                             <span className="relative inline-block">
                                               <img
-                                                className="h-10 w-10 rounded-full"
+                                                className="h-[40px] w-[40px] rounded-full"
                                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                                 alt=""
                                               />
                                               {/* <span className="absolute bottom-0 right-0 block h-2.5 w-2.5 rounded-full bg-green-400 ring-2 ring-white" /> */}
                                             </span>
                                           </div>
-                                          <div>
-                                            <div className="font-openSans_semiBold text-c_515165 space-x-3 w-full">
-                                              <span className="text-[18px]">
+                                          <div className="flex flex-col justify-between">
+                                            <div className="font-openSans_semiBold text-c_515165 space-x-1 w-full">
+                                              <span className="text-[12px] text-[#515165] font-openSans_bold">
                                                 Tobi Bakare
                                               </span>
-                                              <span className="text-[12px] opacity-50">
+                                              <span className="text-[12px] text-[#949494] font-openSans_regular">
                                                 20 mins ago
                                               </span>
                                             </div>
-                                            <div className="text-[12px] opacity-50">
+                                            <div
+                                              className="text-[10px] text-[#949494] font-openSans_regular block max-w-[300px] "
+                                              style={{
+                                                overflow: "hidden",
+                                                textOverflow: "ellipsis",
+                                                whiteSpace: "nowrap",
+                                              }}
+                                            >
                                               Hey! How are you?
                                             </div>
                                           </div>
                                         </div>
-                                        <div className="flex flex-col items-center justify-center text-white font-bold rounded-full text-sm bg-[#FD6769] h-6 w-6">
-                                          1
+                                        <div className="flex flex-col items-center justify-center rounded-full bg-[#FD6769] h-[20px] w-[20px]">
+                                          <span className="text-[12px] font-openSans_bold text-white">
+                                            1
+                                          </span>
                                         </div>
                                       </div>
                                     )
@@ -256,15 +265,15 @@ function Header(props) {
                           leaveTo="opacity-0 translate-y-1"
                         >
                           <Popover.Panel className="absolute z-10 mt-5 flex w-screen max-w-max -translate-x-2/3 px-4 ">
-                            <div className="max-w-lg flex-auto overflow-hidden rounded-md bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
+                            <div className="max-w-[589px] flex-auto overflow-hidden rounded-md bg-white text-sm leading-6 shadow-lg ring-1 ring-gray-900/5">
                               <div className="p-4">
                                 <div className="m-4 flex flex-row items-center justify-between">
-                                  <div className="text-lg font-bold text-[#515165]">
+                                  <div className="text-[26px] font-bold text-[#515165]">
                                     3 Notifications
                                   </div>
 
                                   <div>
-                                    <button className="flex flex-row items-center gap-2 font-bold rounded-lg bg-[#E6F4F6] text-[#0493A3] p-2">
+                                    <button className="flex flex-row items-center gap-2  font-openSans_semiBold rounded-md bg-[#E6F4F6] text-[#0493A3] py-2 px-3 text-[16px]">
                                       <img
                                         src={blueCheckIcon.default}
                                         fill="#0493A3"
@@ -276,10 +285,10 @@ function Header(props) {
                                   </div>
                                 </div>
                                 <div className="px-4 mt-8 flex flex-row items-center justify-between text-[#949494]">
-                                  <div className="text-[#0493A3] font-bold border-2 border-transparent border-b-[#0493A3] ">
+                                  <div className="text-[#0493A3] font-bold border-2 border-transparent border-b-[#0493A3] text-[16px]">
                                     All notifications
                                   </div>
-                                  <div className="flex flex-row items-center gap-1">
+                                  <div className="flex flex-row items-center gap-1 text-[16px] font-openSans_medium">
                                     <div>Reactions</div>
                                     <div>
                                       <img
@@ -288,7 +297,7 @@ function Header(props) {
                                       />
                                     </div>
                                   </div>
-                                  <div className="flex flex-row items-center gap-1">
+                                  <div className="flex flex-row items-center gap-1 text-[16px] font-openSans_medium">
                                     <div>Comments</div>
                                     <div>
                                       <img
@@ -297,7 +306,7 @@ function Header(props) {
                                       />
                                     </div>
                                   </div>
-                                  <div className="flex flex-row items-center gap-1">
+                                  <div className="flex flex-row items-center gap-1 text-[16px] font-openSans_medium">
                                     <div>Mentions</div>
                                     <div>
                                       <img
@@ -311,12 +320,12 @@ function Header(props) {
                                   {[1, 1, 1].map((item, index) => (
                                     <div
                                       key={index}
-                                      className="group relative flex gap-x-5 rounded-lg p-4 hover:bg-gray-50"
+                                      className="group relative flex gap-x-5 rounded-lg p-2 hover:bg-gray-50"
                                     >
                                       <div className="mt-1 flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-gray-50 group-hover:bg-white">
                                         <span className="relative inline-block">
                                           <img
-                                            className="h-10 w-10 rounded-full"
+                                            className="h-[50px] w-[50px] rounded-full"
                                             src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                             alt=""
                                           />
@@ -328,7 +337,7 @@ function Header(props) {
                                           to={item.link}
                                           className="font-openSans_semiBold text-c_515165 space-x-3"
                                         >
-                                          <span className="text-[18px]">
+                                          <span className="text-[18px] text-[#515165]">
                                             Tobi Bakare
                                           </span>
                                           <span className="text-[14px]">
@@ -340,7 +349,7 @@ function Header(props) {
                                         <div className="bg-c_F5F5F5 py-2 px-4 rounded-md">
                                           “I love your music!”
                                         </div>
-                                        <p className="mt-1 text-c_FD6769 text-[18px] font-openSans_semiBold">
+                                        <p className="mt-1 text-c_FD6769 text-[18px] font-openSans_semiBold mb-0">
                                           Check Out My New Music: Dance like me
                                           by Alexander Kalashnikov
                                         </p>
@@ -427,24 +436,25 @@ function Header(props) {
                 >
                   <div className="mx-auto max-w-3xl space-y-1 px-2 pt-2 pb-3 sm:px-4">
                     {NavLinks.map((item, index) => {
-                       const isSelected =
-                            pathname === item.link ||
-                            (pathname.includes(item.link) && item.link !== "/");
-                      return(
-                      <Link
-                        key={index}
-                        to={item.link}
-                        aria-current={isSelected ? "page" : undefined}
-                        className={classNames(
-                          isSelected
-                            ? "bg-gray-100 text-gray-900"
-                            : "hover:bg-gray-50",
-                          "block rounded-md py-2 px-3 text-base font-medium"
-                        )}
-                      >
-                        {item.label}
-                      </Link>
-                    )})}
+                      const isSelected =
+                        pathname === item.link ||
+                        (pathname.includes(item.link) && item.link !== "/");
+                      return (
+                        <Link
+                          key={index}
+                          to={item.link}
+                          aria-current={isSelected ? "page" : undefined}
+                          className={classNames(
+                            isSelected
+                              ? "bg-gray-100 text-gray-900"
+                              : "hover:bg-gray-50",
+                            "block rounded-md py-2 px-3 text-base font-medium"
+                          )}
+                        >
+                          {item.label}
+                        </Link>
+                      );
+                    })}
                   </div>
                   <div className="border-t border-gray-200 pt-4">
                     <div className="mx-auto flex max-w-3xl items-center px-4 sm:px-6">

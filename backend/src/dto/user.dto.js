@@ -5,6 +5,7 @@ import { APP_CONSTANT } from "../utils/constants/app.js";
 
 const UserDto = (data) => {
   const type = data.type;
+  // Seprate fields for seprate accounts.
   let typeSpecificFields = {};
   if (type && type === USER_TYPE.business) {
     typeSpecificFields = {

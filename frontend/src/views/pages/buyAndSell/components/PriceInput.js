@@ -26,7 +26,7 @@ const PriceInput = () => {
         <div className="flex flex-row items-center justify-center">
           <input
             type="range"
-            class="bg-c_FD6769 h-1 range  accent-c_FD6769  w-full cursor-pointer appearance-none rounded-lg border-transparent "
+            className="bg-c_FD6769 h-1 range  accent-c_FD6769  w-full cursor-pointer appearance-none rounded-lg border-transparent "
             id="priceRange"
             min={0}
             max={1000}

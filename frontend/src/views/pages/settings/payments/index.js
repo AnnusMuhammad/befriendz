@@ -29,7 +29,7 @@ const Payments = () => {
                     </div>
                     <div>
                       <button
-                        className="bg-[#FD6769] text-[#FFFFFF] text-[14px] font-openSans_regular flex justify-center items-center gap-2 min-h-[45px] min-w-[169px] rounded-lg"
+                        className="bg-[#FD6769] text-[#FFFFFF] text-[14px] font-openSans_regular flex justify-center items-center gap-2 min-h-[45px] min-w-[169px] rounded-md"
                         onClick={() =>
                           setIsPaymentModalOpen(!isPaymentModalOpen)
                         }
